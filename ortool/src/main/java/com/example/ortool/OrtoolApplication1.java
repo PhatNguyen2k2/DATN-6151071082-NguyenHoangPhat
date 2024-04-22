@@ -23,9 +23,14 @@ public class OrtoolApplication1 {
                 { 35, 85, 55, 20 },
                 { 35, 85, 55, 20 },
         };
-
-        int[][] times = { { 0, 10 }, { 11, 20 }, { 19, 30 }, { 19, 30 } };
-
+        int[][] times = { { 0, 10 }, { 11, 20 }, { 5, 25 }, { 5, 25 } };
+        int[][][] workerShift = {
+                { // Worker 0
+                        { 0, 4 },
+                // { 13, 17 }
+                },
+                null, null
+        };
         final int numWorkers = costs.length;
         final int numTasks = costs[0].length;
 
@@ -42,21 +47,33 @@ public class OrtoolApplication1 {
                 x[worker][task] = model.newBoolVar("x[" + worker + "," + task + "]");
             }
         }
-
-        // Each task is assigned to exactly one worker.
+        // Additional variables and constraints for task scheduling
         for (int worker : allWorkers) {
             List<IntervalVar> lst = new ArrayList<>();
+            // shift constraint
+            if (workerShift[worker] != null) {
+                for (int[] shift : workerShift[worker]) {
+                    int shift_st = shift[0];
+                    int shift_en = shift[1];
+                    IntVar _shift_st = model.newConstant(shift_st);
+                    IntVar _shift_en = model.newConstant(shift_en);
+                    IntVar _shift_size = model.newConstant(shift_en - shift_st);
+                    lst.add(model.newIntervalVar(_shift_st, _shift_size, _shift_en,
+                            "worker-task-shift" + worker));
+                }
+            }
+            // time constraint
             for (int task : allTasks) {
                 int st = times[task][0];
                 int en = times[task][1];
                 IntVar _st = model.newConstant(st);
                 IntVar _en = model.newConstant(en);
-                IntVar _sten = model.newConstant(en - st);
-                lst.add(model.newOptionalIntervalVar(_st, _sten, _en, x[worker][task], "worker-task" + task + worker));
+                IntVar _size = model.newConstant(en - st);
+                lst.add(model.newOptionalIntervalVar(_st, _size, _en, x[worker][task],
+                        "worker-task" + task + worker));
             }
             model.addNoOverlap(lst);
         }
-
         // Each task is assigned to exactly one worker.
         for (int task : allTasks) {
             List<Literal> workers = new ArrayList<>();
