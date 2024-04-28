@@ -23,13 +23,9 @@ public class OrtoolApplication1 {
                 { 35, 85, 55, 20 },
                 { 35, 85, 55, 20 },
         };
-        int[][] times = { { 0, 10 }, { 11, 20 }, { 5, 25 }, { 5, 25 } };
+        int[][] times = { { 0, 10 }, { 11, 20 }, { 19, 30 }, { 19, 30 } };
         int[][][] workerShift = {
-                { // Worker 0
-                        { 0, 4 },
-                // { 13, 17 }
-                },
-                null, null
+                { { 0, 4 } }, { { 20, 30 } }, { { 0, 10 }, { 11, 18 } }
         };
         final int numWorkers = costs.length;
         final int numTasks = costs[0].length;
