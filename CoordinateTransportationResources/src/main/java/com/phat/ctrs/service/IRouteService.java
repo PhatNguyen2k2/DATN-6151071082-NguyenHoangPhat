@@ -8,4 +8,6 @@ public interface IRouteService {
 	public List<Route> getAllRoute();
 
 	public List<List<Route>> getRouteByVehicleType();
+
+	public String calculateCost(List<List<Route>> routeList);
 }

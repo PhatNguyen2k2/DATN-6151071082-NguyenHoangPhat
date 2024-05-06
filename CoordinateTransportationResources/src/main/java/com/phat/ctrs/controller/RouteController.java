@@ -34,6 +34,7 @@ public class RouteController {
 
 	@GetMapping("/type")
 	private ResponseEntity<List<List<Route>>> getRouteByVehicleType() {
+		routeService.calculateCost(routeService.getRouteByVehicleType());
 		return new ResponseEntity<List<List<Route>>>(routeService.getRouteByVehicleType(),
 				HttpStatus.OK);
 	}

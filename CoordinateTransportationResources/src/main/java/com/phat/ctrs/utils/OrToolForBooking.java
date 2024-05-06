@@ -17,19 +17,13 @@ import java.util.stream.IntStream;
 
 /** Assignment problem. */
 public class OrToolForBooking {
-    public static void or(String[] args) {
+    public static HashMap<Integer, List<Integer>> or(int[][] costs) {
         Loader.loadNativeLibraries();
         // Data
-        int[][] costs = {
-                { 90, 76, 75, 20 },
-                { 35, 85, 55, 20 },
-                { 35, 85, 55, 20 },
-        };
-        int[] totalSizeMax = { 2, 1, 1 };
+        int[] totalSizeMax = { 1, 1, 1, 1, 1, 1, 1 };
         int[][] times = { { 0, 10 }, { 11, 20 }, { 5, 25 }, { 5, 25 } };
         int[][][] workerShift = {
-                { { 0, 4 } },
-                null, null
+                null, null, null, null, null, null, null
         };
 
         final int numWorkers = costs.length;
@@ -111,18 +105,39 @@ public class OrToolForBooking {
 
         // Print solution.
         // Check that the problem has a feasible solution.
+
+        // if (status == CpSolverStatus.OPTIMAL || status == CpSolverStatus.FEASIBLE) {
+        // System.out.println("Total cost: " + solver.objectiveValue() + "\n");
+        // for (int worker : allWorkers) {
+        // for (int task : allTasks) {
+        // if (solver.booleanValue(x[worker][task])) {
+        // System.out.println("Worker " + worker + " assigned to task " + task
+        // + ". Cost: " + costs[worker][task]);
+        // }
+        // }
+        // }
+        // } else {
+        // System.err.println("No solution found.");
+        // }
+        HashMap<Integer, List<Integer>> solution = new HashMap<Integer, List<Integer>>();
         if (status == CpSolverStatus.OPTIMAL || status == CpSolverStatus.FEASIBLE) {
-            System.out.println("Total cost: " + solver.objectiveValue() + "\n");
             for (int worker : allWorkers) {
+                List<Integer> l = new ArrayList<>();
                 for (int task : allTasks) {
                     if (solver.booleanValue(x[worker][task])) {
                         System.out.println("Worker " + worker + " assigned to task " + task
                                 + ".  Cost: " + costs[worker][task]);
+                        l.add(task);
                     }
+                }
+                if (l.size() > 0) {
+                    solution.put(worker, l);
                 }
             }
         } else {
             System.err.println("No solution found.");
         }
+
+        return solution;
     }
 }

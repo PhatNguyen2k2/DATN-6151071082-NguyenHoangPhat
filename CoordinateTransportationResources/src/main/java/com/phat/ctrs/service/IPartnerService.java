@@ -7,4 +7,6 @@ import com.phat.ctrs.model.Partner;
 
 public interface IPartnerService {
     public List<Partner> getPartnersByVehicleType(BigDecimal vehicleType);
+
+    public BigDecimal getFeeOnKmOfPartnerByVehicleType(BigDecimal partnerId, BigDecimal vehicleTypeId);
 }

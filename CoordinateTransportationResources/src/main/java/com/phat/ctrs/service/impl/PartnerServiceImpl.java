@@ -23,4 +23,9 @@ public class PartnerServiceImpl implements IPartnerService {
         return partnerRepository.getPartnerByVehicleType(vehicleType);
     }
 
+    @Override
+    public BigDecimal getFeeOnKmOfPartnerByVehicleType(BigDecimal partnerId, BigDecimal vehicleTypeId) {
+        return partnerRepository.getFeeOnKmOfPartnerByVehicleType(partnerId, vehicleTypeId);
+    }
+
 }
