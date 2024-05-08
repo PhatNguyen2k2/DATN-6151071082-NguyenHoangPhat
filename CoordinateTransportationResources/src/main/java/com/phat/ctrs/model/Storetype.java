@@ -8,13 +8,15 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Version;
 
-@Entity(name="STORETYPE")
+@Entity(name = "STORETYPE")
 public class Storetype implements Serializable {
 
     /** Primary key. */
@@ -24,7 +26,7 @@ public class Storetype implements Serializable {
      * The optimistic lock. Available via standard bean get/set operations.
      */
     @Version
-    @Column(name="LOCK_FLAG")
+    @Column(name = "LOCK_FLAG")
     private Integer lockFlag;
 
     /**
@@ -46,10 +48,11 @@ public class Storetype implements Serializable {
     }
 
     @Id
-    @Column(unique=true, nullable=false, precision=10)
+    @Column(unique = true, nullable = false, precision = 10)
     private BigDecimal storeTypeId;
     private String storeTypeName;
-    @OneToMany(mappedBy="storetype")
+    @OneToMany(mappedBy = "storetype")
+    @JsonIgnore
     private Set<Store> store;
 
     /** Default constructor. */
@@ -115,10 +118,11 @@ public class Storetype implements Serializable {
      * Compares the key for this instance with another Storetype.
      *
      * @param other The object to compare to
-     * @return True if other object is instance of class Storetype and the key objects are equal
+     * @return True if other object is instance of class Storetype and the key
+     *         objects are equal
      */
     private boolean equalKeys(Object other) {
-        if (this==other) {
+        if (this == other) {
             return true;
         }
         if (!(other instanceof Storetype)) {
@@ -127,7 +131,7 @@ public class Storetype implements Serializable {
         Storetype that = (Storetype) other;
         Object myStoreTypeId = this.getStoreTypeId();
         Object yourStoreTypeId = that.getStoreTypeId();
-        if (myStoreTypeId==null ? yourStoreTypeId!=null : !myStoreTypeId.equals(yourStoreTypeId)) {
+        if (myStoreTypeId == null ? yourStoreTypeId != null : !myStoreTypeId.equals(yourStoreTypeId)) {
             return false;
         }
         return true;
@@ -141,8 +145,9 @@ public class Storetype implements Serializable {
      */
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof Storetype)) return false;
-        return this.equalKeys(other) && ((Storetype)other).equalKeys(this);
+        if (!(other instanceof Storetype))
+            return false;
+        return this.equalKeys(other) && ((Storetype) other).equalKeys(this);
     }
 
     /**
@@ -159,7 +164,7 @@ public class Storetype implements Serializable {
         } else {
             i = getStoreTypeId().hashCode();
         }
-        result = 37*result + i;
+        result = 37 * result + i;
         return result;
     }
 

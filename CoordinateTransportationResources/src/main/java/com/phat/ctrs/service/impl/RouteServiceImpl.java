@@ -1,6 +1,8 @@
 package com.phat.ctrs.service.impl;
 
 import java.math.BigDecimal;
+import java.time.Duration;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +15,8 @@ import org.springframework.stereotype.Service;
 
 import com.phat.ctrs.model.Partner;
 import com.phat.ctrs.model.Route;
+import com.phat.ctrs.model.Shift;
+import com.phat.ctrs.model.VehicleLoadType;
 import com.phat.ctrs.repository.IRouteRepository;
 import com.phat.ctrs.service.IPartnerService;
 import com.phat.ctrs.service.IRouteService;
@@ -50,11 +54,16 @@ public class RouteServiceImpl implements IRouteService {
 			List<Partner> partnerList = partnerService.getPartnersByVehicleType(vehicleTypeId);
 			List<Integer> routeLength = new ArrayList<Integer>();
 			List<Integer> costPartner = new ArrayList<Integer>();
+			List<List<VehicleLoadType>> vehicleLoadTypes = new ArrayList<List<VehicleLoadType>>();
 			route.forEach(t -> routeLength.add(Integer.valueOf(t.getRouteLength().intValue())));
-			partnerList.forEach(t -> costPartner.add(Integer.valueOf(
-					partnerService.getFeeOnKmOfPartnerByVehicleType(t.getPartnerId(), vehicleTypeId).intValue())));
+			partnerList.forEach(t -> {
+				costPartner.add(Integer.valueOf(
+						partnerService.getFeeOnKmOfPartnerByVehicleType(t.getPartnerId(), vehicleTypeId).intValue()));
+				vehicleLoadTypes.add(partnerService.getVehicleLoadTypesByPartnerId(t.getPartnerId()));
+			});
 			int costs[][] = OrToolsHelper.buildCostMatrix(routeLength, costPartner);
-			HashMap<Integer, List<Integer>> rs = OrToolForBooking.or(costs);
+			int times[][] = OrToolsHelper.buildShiftOfRoute(route);
+			HashMap<Integer, List<Integer>> rs = OrToolForBooking.or(costs, times);
 			// routeList
 			// partnerList
 			Set<Integer> keys = rs.keySet();

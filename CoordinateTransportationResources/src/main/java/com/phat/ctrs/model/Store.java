@@ -10,13 +10,18 @@ import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Version;
 
-@Entity(name="STORE")
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@Entity(name = "STORE")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Store implements Serializable {
 
     /** Primary key. */
@@ -26,7 +31,7 @@ public class Store implements Serializable {
      * The optimistic lock. Available via standard bean get/set operations.
      */
     @Version
-    @Column(name="LOCK_FLAG")
+    @Column(name = "LOCK_FLAG")
     private Integer lockFlag;
 
     /**
@@ -48,53 +53,74 @@ public class Store implements Serializable {
     }
 
     @Id
-    @Column(unique=true, nullable=false, precision=10)
+    @Column(unique = true, nullable = false, precision = 10)
     private BigDecimal storeId;
     private String storeName;
-    @OneToMany(mappedBy="store")
+    @OneToMany(mappedBy = "store")
+    @JsonIgnore
     private Set<BookingPercent> bookingPercent;
-    @OneToMany(mappedBy="store")
+    @OneToMany(mappedBy = "store")
+    @JsonIgnore
     private Set<DriverPriceDetail> driverPriceDetail;
-    @OneToMany(mappedBy="store")
+    @OneToMany(mappedBy = "store")
+    @JsonIgnore
     private Set<EmployeeAgreement> employeeAgreement;
-    @OneToMany(mappedBy="store")
+    @OneToMany(mappedBy = "store")
+    @JsonIgnore
     private Set<EmployeeLoad> employeeLoad;
-    @OneToMany(mappedBy="store")
+    @OneToMany(mappedBy = "store")
+    @JsonIgnore
     private Set<Employee> employee;
-    @OneToMany(mappedBy="store")
+    @OneToMany(mappedBy = "store")
+    @JsonIgnore
     private Set<EmployeeViolateInfo> employeeViolateInfo;
-    @OneToMany(mappedBy="store")
+    @OneToMany(mappedBy = "store")
+    @JsonIgnore
     private Set<LoadDeviation> loadDeviation;
-    @OneToMany(mappedBy="store")
+    @OneToMany(mappedBy = "store")
+    @JsonIgnore
     private Set<MaxDrivingTime> maxDrivingTime;
-    @OneToMany(mappedBy="store")
+    @OneToMany(mappedBy = "store")
+    @JsonIgnore
     private Set<PartnerRequestpermonth> partnerRequestpermonth;
-    @OneToMany(mappedBy="store")
+    @OneToMany(mappedBy = "store")
+    @JsonIgnore
     private Set<RuleInUse> ruleInUse;
-    @OneToMany(mappedBy="store2")
+    @OneToMany(mappedBy = "store2")
+    @JsonIgnore
     private Set<Serviceorder> serviceorder2;
-    @OneToMany(mappedBy="store")
+    @OneToMany(mappedBy = "store")
+    @JsonIgnore
     private Set<Serviceorder> serviceorder;
-    @OneToMany(mappedBy="store")
+    @OneToMany(mappedBy = "store")
+    @JsonIgnore
     private Set<Shift> shift;
-    @ManyToOne(optional=false)
-    @JoinColumn(name="addressId", nullable=false)
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "addressId", nullable = false)
     private Address address;
-    @OneToMany(mappedBy="store2")
+    @OneToMany(mappedBy = "store2")
+    @JsonIgnore
     private Set<Store> store3;
+
     @ManyToOne
-    @JoinColumn(name="coordinationStore")
+    @JoinColumn(name = "coordinationStore")
+    @JsonIgnore
     private Store store2;
-    @ManyToOne(optional=false)
-    @JoinColumn(name="storeTypeId", nullable=false)
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "storeTypeId", nullable = false)
     private Storetype storetype;
-    @OneToMany(mappedBy="store")
+    @OneToMany(mappedBy = "store")
+    @JsonIgnore
     private Set<VehicleAgreement> vehicleAgreement;
-    @OneToMany(mappedBy="store")
+    @OneToMany(mappedBy = "store")
+    @JsonIgnore
     private Set<VehicleBookingExpiration> vehicleBookingExpiration;
-    @OneToMany(mappedBy="store")
+    @OneToMany(mappedBy = "store")
+    @JsonIgnore
     private Set<VehicleBookingRate> vehicleBookingRate;
-    @OneToMany(mappedBy="store")
+    @OneToMany(mappedBy = "store")
+    @JsonIgnore
     private Set<VehicleLoadType> vehicleLoadType;
 
     /** Default constructor. */
@@ -520,10 +546,11 @@ public class Store implements Serializable {
      * Compares the key for this instance with another Store.
      *
      * @param other The object to compare to
-     * @return True if other object is instance of class Store and the key objects are equal
+     * @return True if other object is instance of class Store and the key objects
+     *         are equal
      */
     private boolean equalKeys(Object other) {
-        if (this==other) {
+        if (this == other) {
             return true;
         }
         if (!(other instanceof Store)) {
@@ -532,7 +559,7 @@ public class Store implements Serializable {
         Store that = (Store) other;
         Object myStoreId = this.getStoreId();
         Object yourStoreId = that.getStoreId();
-        if (myStoreId==null ? yourStoreId!=null : !myStoreId.equals(yourStoreId)) {
+        if (myStoreId == null ? yourStoreId != null : !myStoreId.equals(yourStoreId)) {
             return false;
         }
         return true;
@@ -546,8 +573,9 @@ public class Store implements Serializable {
      */
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof Store)) return false;
-        return this.equalKeys(other) && ((Store)other).equalKeys(this);
+        if (!(other instanceof Store))
+            return false;
+        return this.equalKeys(other) && ((Store) other).equalKeys(this);
     }
 
     /**
@@ -564,7 +592,7 @@ public class Store implements Serializable {
         } else {
             i = getStoreId().hashCode();
         }
-        result = 37*result + i;
+        result = 37 * result + i;
         return result;
     }
 

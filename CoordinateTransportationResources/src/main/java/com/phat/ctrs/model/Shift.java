@@ -9,15 +9,20 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Version;
 
-@Entity(name="SHIFT")
+@Entity(name = "SHIFT")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Shift implements Serializable {
 
     /** Primary key. */
@@ -27,7 +32,7 @@ public class Shift implements Serializable {
      * The optimistic lock. Available via standard bean get/set operations.
      */
     @Version
-    @Column(name="LOCK_FLAG")
+    @Column(name = "LOCK_FLAG")
     private Integer lockFlag;
 
     /**
@@ -49,19 +54,21 @@ public class Shift implements Serializable {
     }
 
     @Id
-    @Column(unique=true, nullable=false, precision=10)
+    @Column(unique = true, nullable = false, precision = 10)
     private BigDecimal shiftId;
     private String shiftName;
-    @Column(precision=1)
+    @Column(precision = 1)
     private BigDecimal shiftNumber;
     private LocalTime timeStart;
     private LocalTime timeEnd;
-    @OneToMany(mappedBy="shift")
+    @OneToMany(mappedBy = "shift")
+    @JsonIgnore
     private Set<EmployeeLoad> employeeLoad;
-    @OneToMany(mappedBy="shift")
+    @OneToMany(mappedBy = "shift")
+    @JsonIgnore
     private Set<EmployeeShift> employeeShift;
     @ManyToOne
-    @JoinColumn(name="storeId")
+    @JoinColumn(name = "storeId")
     private Store store;
 
     /** Default constructor. */
@@ -217,10 +224,11 @@ public class Shift implements Serializable {
      * Compares the key for this instance with another Shift.
      *
      * @param other The object to compare to
-     * @return True if other object is instance of class Shift and the key objects are equal
+     * @return True if other object is instance of class Shift and the key objects
+     *         are equal
      */
     private boolean equalKeys(Object other) {
-        if (this==other) {
+        if (this == other) {
             return true;
         }
         if (!(other instanceof Shift)) {
@@ -229,7 +237,7 @@ public class Shift implements Serializable {
         Shift that = (Shift) other;
         Object myShiftId = this.getShiftId();
         Object yourShiftId = that.getShiftId();
-        if (myShiftId==null ? yourShiftId!=null : !myShiftId.equals(yourShiftId)) {
+        if (myShiftId == null ? yourShiftId != null : !myShiftId.equals(yourShiftId)) {
             return false;
         }
         return true;
@@ -243,8 +251,9 @@ public class Shift implements Serializable {
      */
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof Shift)) return false;
-        return this.equalKeys(other) && ((Shift)other).equalKeys(this);
+        if (!(other instanceof Shift))
+            return false;
+        return this.equalKeys(other) && ((Shift) other).equalKeys(this);
     }
 
     /**
@@ -261,7 +270,7 @@ public class Shift implements Serializable {
         } else {
             i = getShiftId().hashCode();
         }
-        result = 37*result + i;
+        result = 37 * result + i;
         return result;
     }
 

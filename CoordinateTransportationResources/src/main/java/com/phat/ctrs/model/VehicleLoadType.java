@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -15,7 +17,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Version;
 
-@Entity(name="VEHICLE_LOAD_TYPE")
+@Entity(name = "VEHICLE_LOAD_TYPE")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class VehicleLoadType implements Serializable {
 
     /** Primary key. */
@@ -25,7 +28,7 @@ public class VehicleLoadType implements Serializable {
      * The optimistic lock. Available via standard bean get/set operations.
      */
     @Version
-    @Column(name="LOCK_FLAG")
+    @Column(name = "LOCK_FLAG")
     private Integer lockFlag;
 
     /**
@@ -47,33 +50,33 @@ public class VehicleLoadType implements Serializable {
     }
 
     @Id
-    @Column(unique=true, nullable=false, precision=10)
+    @Column(unique = true, nullable = false, precision = 10)
     private BigDecimal loadVehicleTypeId;
-    private String workingShift;
+    private String shift;
     private String vehicleLoad;
     private String usedVehicleLoad;
     private String residualVehicleLoad;
     private LocalDateTime day;
-    @Column(precision=10)
+    @Column(precision = 10)
     private BigDecimal createdUser;
     private LocalDateTime createdDate;
-    @Column(precision=10)
+    @Column(precision = 10)
     private BigDecimal updatedUser;
     private LocalDateTime updatedDate;
-    @Column(precision=10)
+    @Column(precision = 10)
     private BigDecimal deletedUser;
     private LocalDateTime deletedDate;
     private String updateNote;
-    @Column(length=1)
+    @Column(length = 1)
     private boolean isLast;
-    @ManyToOne
-    @JoinColumn(name="partnerId")
+    @ManyToOne()
+    @JoinColumn(name = "partnerId")
     private Partner partner;
     @ManyToOne
-    @JoinColumn(name="storeId")
+    @JoinColumn(name = "storeId")
     private Store store;
-    @ManyToOne(optional=false)
-    @JoinColumn(name="vehicleTypeID", nullable=false)
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "vehicleTypeID", nullable = false)
     private Vehicletype vehicletype;
 
     /** Default constructor. */
@@ -104,18 +107,6 @@ public class VehicleLoadType implements Serializable {
      *
      * @return the current value of workingShift
      */
-    public String getWorkingShift() {
-        return workingShift;
-    }
-
-    /**
-     * Setter method for workingShift.
-     *
-     * @param aWorkingShift the new value for workingShift
-     */
-    public void setWorkingShift(String aWorkingShift) {
-        workingShift = aWorkingShift;
-    }
 
     /**
      * Access method for vehicleLoad.
@@ -391,10 +382,11 @@ public class VehicleLoadType implements Serializable {
      * Compares the key for this instance with another VehicleLoadType.
      *
      * @param other The object to compare to
-     * @return True if other object is instance of class VehicleLoadType and the key objects are equal
+     * @return True if other object is instance of class VehicleLoadType and the key
+     *         objects are equal
      */
     private boolean equalKeys(Object other) {
-        if (this==other) {
+        if (this == other) {
             return true;
         }
         if (!(other instanceof VehicleLoadType)) {
@@ -403,7 +395,8 @@ public class VehicleLoadType implements Serializable {
         VehicleLoadType that = (VehicleLoadType) other;
         Object myLoadVehicleTypeId = this.getLoadVehicleTypeId();
         Object yourLoadVehicleTypeId = that.getLoadVehicleTypeId();
-        if (myLoadVehicleTypeId==null ? yourLoadVehicleTypeId!=null : !myLoadVehicleTypeId.equals(yourLoadVehicleTypeId)) {
+        if (myLoadVehicleTypeId == null ? yourLoadVehicleTypeId != null
+                : !myLoadVehicleTypeId.equals(yourLoadVehicleTypeId)) {
             return false;
         }
         return true;
@@ -417,8 +410,9 @@ public class VehicleLoadType implements Serializable {
      */
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof VehicleLoadType)) return false;
-        return this.equalKeys(other) && ((VehicleLoadType)other).equalKeys(this);
+        if (!(other instanceof VehicleLoadType))
+            return false;
+        return this.equalKeys(other) && ((VehicleLoadType) other).equalKeys(this);
     }
 
     /**
@@ -435,21 +429,13 @@ public class VehicleLoadType implements Serializable {
         } else {
             i = getLoadVehicleTypeId().hashCode();
         }
-        result = 37*result + i;
+        result = 37 * result + i;
         return result;
     }
 
-    /**
-     * Returns a debug-friendly String representation of this instance.
-     *
-     * @return String representation of this instance
-     */
     @Override
     public String toString() {
-        StringBuffer sb = new StringBuffer("[VehicleLoadType |");
-        sb.append(" loadVehicleTypeId=").append(getLoadVehicleTypeId());
-        sb.append("]");
-        return sb.toString();
+        return "VehicleLoadType [partner=" + partner + ", store=" + store + "]";
     }
 
     /**
@@ -461,6 +447,22 @@ public class VehicleLoadType implements Serializable {
         Map<String, Object> ret = new LinkedHashMap<String, Object>(6);
         ret.put("loadVehicleTypeId", getLoadVehicleTypeId());
         return ret;
+    }
+
+    public static String getPk() {
+        return PK;
+    }
+
+    public String getShift() {
+        return shift;
+    }
+
+    public void setShift(String shift) {
+        this.shift = shift;
+    }
+
+    public void setLast(boolean isLast) {
+        this.isLast = isLast;
     }
 
 }

@@ -12,16 +12,14 @@ import com.google.ortools.sat.Literal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.IntStream;
 
 /** Assignment problem. */
 public class OrToolForBooking {
-    public static HashMap<Integer, List<Integer>> or(int[][] costs) {
+    public static HashMap<Integer, List<Integer>> or(int[][] costs, int[][] times) {
         Loader.loadNativeLibraries();
         // Data
         int[] totalSizeMax = { 1, 1, 1, 1, 1, 1, 1 };
-        int[][] times = { { 0, 10 }, { 11, 20 }, { 5, 25 }, { 5, 25 } };
         int[][][] workerShift = {
                 null, null, null, null, null, null, null
         };
