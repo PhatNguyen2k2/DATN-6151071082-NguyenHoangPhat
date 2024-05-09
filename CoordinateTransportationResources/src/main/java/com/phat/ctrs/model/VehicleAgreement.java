@@ -9,6 +9,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -17,7 +19,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Version;
 
-@Entity(name="VEHICLE_AGREEMENT")
+@Entity(name = "VEHICLE_AGREEMENT")
 public class VehicleAgreement implements Serializable {
 
     /** Primary key. */
@@ -27,7 +29,7 @@ public class VehicleAgreement implements Serializable {
      * The optimistic lock. Available via standard bean get/set operations.
      */
     @Version
-    @Column(name="LOCK_FLAG")
+    @Column(name = "LOCK_FLAG")
     private Integer lockFlag;
 
     /**
@@ -49,49 +51,53 @@ public class VehicleAgreement implements Serializable {
     }
 
     @Id
-    @Column(unique=true, nullable=false, precision=10)
+    @Column(unique = true, nullable = false, precision = 10)
     private BigDecimal vehicleAgreementId;
     private String vehicleAgreementName;
     private LocalDateTime effectiveDate;
     private LocalDateTime agreementExpirationDate;
-    @Column(length=1)
+    @Column(length = 1)
     private boolean agreementExtended;
     private LocalDateTime extensionToDate;
-    @Column(length=1)
+    @Column(length = 1)
     private boolean agreementHasBeenLiquidated;
     private LocalDateTime agreementLiquidationDate;
-    @Column(length=1)
+    @Column(length = 1)
     private boolean agreementCanceled;
-    @Column(precision=10)
+    @Column(precision = 10)
     private BigDecimal maximumNumberOfViolations;
-    @Column(precision=10)
+    @Column(precision = 10)
     private BigDecimal createdUser;
     private LocalDateTime createdDate;
-    @Column(precision=10)
+    @Column(precision = 10)
     private BigDecimal updatedUser;
     private LocalDateTime updatedDate;
-    @Column(precision=10)
+    @Column(precision = 10)
     private BigDecimal deletedUser;
     private LocalDateTime deletedDate;
     private String updateNote;
-    @Column(length=1)
+    @Column(length = 1)
     private boolean isLast;
-    @OneToMany(mappedBy="vehicleAgreement")
+    @OneToMany(mappedBy = "vehicleAgreement")
+    @JsonIgnore
     private Set<AgreementViolateInfo> agreementViolateInfo;
-    @OneToMany(mappedBy="vehicleAgreement")
+    @OneToMany(mappedBy = "vehicleAgreement")
+    @JsonIgnore
     private Set<FeeByBookingDay> feeByBookingDay;
-    @OneToMany(mappedBy="vehicleAgreement")
+    @OneToMany(mappedBy = "vehicleAgreement")
+    @JsonIgnore
     private Set<ServicePrice> servicePrice;
-    @OneToMany(mappedBy="vehicleAgreement")
+    @OneToMany(mappedBy = "vehicleAgreement")
+    @JsonIgnore
     private Set<TransportResource> transportResource;
     @ManyToOne
-    @JoinColumn(name="partnerId")
+    @JoinColumn(name = "partnerId")
     private Partner partner;
     @ManyToOne
-    @JoinColumn(name="storeId")
+    @JoinColumn(name = "storeId")
     private Store store;
-    @ManyToOne(optional=false)
-    @JoinColumn(name="vehicleRentalAgreementTypeId", nullable=false)
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "vehicleRentalAgreementTypeId", nullable = false)
     private VehicleRentalAgreementType vehicleRentalAgreementType;
 
     /** Default constructor. */
@@ -219,7 +225,8 @@ public class VehicleAgreement implements Serializable {
     /**
      * Setter method for agreementHasBeenLiquidated.
      *
-     * @param aAgreementHasBeenLiquidated the new value for agreementHasBeenLiquidated
+     * @param aAgreementHasBeenLiquidated the new value for
+     *                                    agreementHasBeenLiquidated
      */
     public void setAgreementHasBeenLiquidated(boolean aAgreementHasBeenLiquidated) {
         agreementHasBeenLiquidated = aAgreementHasBeenLiquidated;
@@ -543,7 +550,8 @@ public class VehicleAgreement implements Serializable {
     /**
      * Setter method for vehicleRentalAgreementType.
      *
-     * @param aVehicleRentalAgreementType the new value for vehicleRentalAgreementType
+     * @param aVehicleRentalAgreementType the new value for
+     *                                    vehicleRentalAgreementType
      */
     public void setVehicleRentalAgreementType(VehicleRentalAgreementType aVehicleRentalAgreementType) {
         vehicleRentalAgreementType = aVehicleRentalAgreementType;
@@ -553,10 +561,11 @@ public class VehicleAgreement implements Serializable {
      * Compares the key for this instance with another VehicleAgreement.
      *
      * @param other The object to compare to
-     * @return True if other object is instance of class VehicleAgreement and the key objects are equal
+     * @return True if other object is instance of class VehicleAgreement and the
+     *         key objects are equal
      */
     private boolean equalKeys(Object other) {
-        if (this==other) {
+        if (this == other) {
             return true;
         }
         if (!(other instanceof VehicleAgreement)) {
@@ -565,7 +574,8 @@ public class VehicleAgreement implements Serializable {
         VehicleAgreement that = (VehicleAgreement) other;
         Object myVehicleAgreementId = this.getVehicleAgreementId();
         Object yourVehicleAgreementId = that.getVehicleAgreementId();
-        if (myVehicleAgreementId==null ? yourVehicleAgreementId!=null : !myVehicleAgreementId.equals(yourVehicleAgreementId)) {
+        if (myVehicleAgreementId == null ? yourVehicleAgreementId != null
+                : !myVehicleAgreementId.equals(yourVehicleAgreementId)) {
             return false;
         }
         return true;
@@ -579,8 +589,9 @@ public class VehicleAgreement implements Serializable {
      */
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof VehicleAgreement)) return false;
-        return this.equalKeys(other) && ((VehicleAgreement)other).equalKeys(this);
+        if (!(other instanceof VehicleAgreement))
+            return false;
+        return this.equalKeys(other) && ((VehicleAgreement) other).equalKeys(this);
     }
 
     /**
@@ -597,7 +608,7 @@ public class VehicleAgreement implements Serializable {
         } else {
             i = getVehicleAgreementId().hashCode();
         }
-        result = 37*result + i;
+        result = 37 * result + i;
         return result;
     }
 

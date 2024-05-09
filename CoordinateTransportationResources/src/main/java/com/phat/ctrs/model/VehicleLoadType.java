@@ -52,7 +52,9 @@ public class VehicleLoadType implements Serializable {
     @Id
     @Column(unique = true, nullable = false, precision = 10)
     private BigDecimal loadVehicleTypeId;
-    private String shift;
+    @ManyToOne
+    @JoinColumn(name = "shiftId")
+    private Shift shift;
     private String vehicleLoad;
     private String usedVehicleLoad;
     private String residualVehicleLoad;
@@ -453,11 +455,11 @@ public class VehicleLoadType implements Serializable {
         return PK;
     }
 
-    public String getShift() {
+    public Shift getShift() {
         return shift;
     }
 
-    public void setShift(String shift) {
+    public void setShift(Shift shift) {
         this.shift = shift;
     }
 

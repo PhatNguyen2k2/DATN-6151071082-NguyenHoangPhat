@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.phat.ctrs.model.Partner;
 import com.phat.ctrs.model.VehicleLoadType;
 import com.phat.ctrs.repository.IPartnerRepository;
+import com.phat.ctrs.repository.ITransportResourceRepository;
 import com.phat.ctrs.repository.IVehicleLoadTypeRepository;
 import com.phat.ctrs.service.IPartnerService;
 
@@ -21,6 +22,8 @@ public class PartnerServiceImpl implements IPartnerService {
     IPartnerRepository partnerRepository;
     @Autowired
     IVehicleLoadTypeRepository vehicleLoadTypeRepository;
+    @Autowired
+    ITransportResourceRepository transportResourceRepository;
 
     @Override
     public List<Partner> getPartnersByVehicleType(BigDecimal vehicleType) {
@@ -33,8 +36,13 @@ public class PartnerServiceImpl implements IPartnerService {
     }
 
     @Override
-    public List<VehicleLoadType> getVehicleLoadTypesByPartnerId(BigDecimal partnerId) {
-        return vehicleLoadTypeRepository.getVehicleLoadTypesByPartnerId(partnerId);
+    public VehicleLoadType getVehicleLoadTypesByPartnerId(BigDecimal partnerId, BigDecimal vehicleTypeId) {
+        return vehicleLoadTypeRepository.getVehicleLoadTypesByPartnerId(partnerId, vehicleTypeId);
+    }
+
+    @Override
+    public BigDecimal getResourceOfPartner(BigDecimal partnerId, BigDecimal vehicleTypeId) {
+        return transportResourceRepository.getResourceOfPartner(partnerId, vehicleTypeId);
     }
 
 }

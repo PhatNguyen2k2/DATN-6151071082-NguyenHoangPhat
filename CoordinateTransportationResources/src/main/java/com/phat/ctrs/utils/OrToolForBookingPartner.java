@@ -16,13 +16,9 @@ import java.util.stream.IntStream;
 
 /** Assignment problem. */
 public class OrToolForBooking {
-    public static HashMap<Integer, List<Integer>> or(int[][] costs, int[][] times) {
+    public static HashMap<Integer, List<Integer>> or(int[][] costs, int[][] times, int[][][] workerShift,
+            int[] totalSizeMax) {
         Loader.loadNativeLibraries();
-        // Data
-        int[] totalSizeMax = { 1, 1, 1, 1, 1, 1, 1 };
-        int[][][] workerShift = {
-                null, null, null, null, null, null, null
-        };
 
         final int numWorkers = costs.length;
         final int numTasks = costs[0].length;
@@ -102,21 +98,6 @@ public class OrToolForBooking {
         CpSolverStatus status = solver.solve(model);
 
         // Print solution.
-        // Check that the problem has a feasible solution.
-
-        // if (status == CpSolverStatus.OPTIMAL || status == CpSolverStatus.FEASIBLE) {
-        // System.out.println("Total cost: " + solver.objectiveValue() + "\n");
-        // for (int worker : allWorkers) {
-        // for (int task : allTasks) {
-        // if (solver.booleanValue(x[worker][task])) {
-        // System.out.println("Worker " + worker + " assigned to task " + task
-        // + ". Cost: " + costs[worker][task]);
-        // }
-        // }
-        // }
-        // } else {
-        // System.err.println("No solution found.");
-        // }
         HashMap<Integer, List<Integer>> solution = new HashMap<Integer, List<Integer>>();
         if (status == CpSolverStatus.OPTIMAL || status == CpSolverStatus.FEASIBLE) {
             for (int worker : allWorkers) {

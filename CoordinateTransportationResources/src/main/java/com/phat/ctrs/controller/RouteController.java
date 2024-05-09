@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.phat.ctrs.model.Partner;
 import com.phat.ctrs.model.Route;
-import com.phat.ctrs.model.VehicleLoadType;
 import com.phat.ctrs.service.IPartnerService;
 import com.phat.ctrs.service.IRouteService;
 

@@ -5,8 +5,6 @@ package com.phat.ctrs.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Set;
 
 import jakarta.persistence.Column;

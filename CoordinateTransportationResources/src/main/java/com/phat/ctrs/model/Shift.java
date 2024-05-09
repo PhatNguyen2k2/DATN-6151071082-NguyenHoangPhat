@@ -14,7 +14,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -70,6 +69,9 @@ public class Shift implements Serializable {
     @ManyToOne
     @JoinColumn(name = "storeId")
     private Store store;
+    @OneToMany(mappedBy = "shift")
+    @JsonIgnore
+    private Set<VehicleLoadType> vehicleLoadType;
 
     /** Default constructor. */
     public Shift() {
@@ -164,6 +166,14 @@ public class Shift implements Serializable {
      */
     public void setTimeEnd(LocalTime aTimeEnd) {
         timeEnd = aTimeEnd;
+    }
+
+    public Set<VehicleLoadType> getVehicleLoadType() {
+        return vehicleLoadType;
+    }
+
+    public void setVehicleLoadType(Set<VehicleLoadType> vehicleLoadType) {
+        this.vehicleLoadType = vehicleLoadType;
     }
 
     /**

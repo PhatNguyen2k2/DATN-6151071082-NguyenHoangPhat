@@ -1,5 +1,6 @@
 package com.phat.ctrs.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.phat.ctrs.model.Route;
@@ -9,5 +10,5 @@ public interface IRouteService {
 
 	public List<List<Route>> getRouteByVehicleType();
 
-	public String calculateCost(List<List<Route>> routeList);
+	public List<HashMap<Integer, List<Integer>>> calculateCost(List<List<Route>> routeList);
 }

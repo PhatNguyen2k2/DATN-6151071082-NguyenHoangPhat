@@ -4,8 +4,6 @@ package com.phat.ctrs.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;

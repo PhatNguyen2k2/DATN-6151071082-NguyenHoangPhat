@@ -11,5 +11,7 @@ public interface IPartnerService {
 
     public BigDecimal getFeeOnKmOfPartnerByVehicleType(BigDecimal partnerId, BigDecimal vehicleTypeId);
 
-    public List<VehicleLoadType> getVehicleLoadTypesByPartnerId(BigDecimal partnerId);
+    public VehicleLoadType getVehicleLoadTypesByPartnerId(BigDecimal partnerId, BigDecimal vehicleTypeId);
+
+    public BigDecimal getResourceOfPartner(BigDecimal partnerId, BigDecimal vehicleTypeId);
 }
