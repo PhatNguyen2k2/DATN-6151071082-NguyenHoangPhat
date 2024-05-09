@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 /** Assignment problem. */
-public class OrToolForBooking {
+public class OrToolForBookingPartner {
     public static HashMap<Integer, List<Integer>> or(int[][] costs, int[][] times, int[][][] workerShift,
             int[] totalSizeMax) {
         Loader.loadNativeLibraries();

@@ -18,7 +18,7 @@ import com.phat.ctrs.model.VehicleLoadType;
 import com.phat.ctrs.repository.IRouteRepository;
 import com.phat.ctrs.service.IPartnerService;
 import com.phat.ctrs.service.IRouteService;
-import com.phat.ctrs.utils.OrToolForBooking;
+import com.phat.ctrs.utils.OrToolForBookingPartner;
 import com.phat.ctrs.utils.OrToolsHelper;
 
 @Service
@@ -129,7 +129,7 @@ public class RouteServiceImpl implements IRouteService {
 					int[][] times = OrToolsHelper.buildShiftOfRoute(route);
 					int[][][] shiftTimes = OrToolsHelper.buildServeTimeOfPartner(serveTime);
 
-					return OrToolForBooking.or(costs, times, shiftTimes, totalSizeMax);
+					return OrToolForBookingPartner.or(costs, times, shiftTimes, totalSizeMax);
 				})
 				.collect(Collectors.toList());
 	}
