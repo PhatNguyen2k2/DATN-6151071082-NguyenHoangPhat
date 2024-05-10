@@ -9,6 +9,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -17,7 +19,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Version;
 
-@Entity(name="TRANSPORT_SERVICE_PLAN")
+@Entity(name = "TRANSPORT_SERVICE_PLAN")
 public class TransportServicePlan implements Serializable {
 
     /** Primary key. */
@@ -27,7 +29,7 @@ public class TransportServicePlan implements Serializable {
      * The optimistic lock. Available via standard bean get/set operations.
      */
     @Version
-    @Column(name="LOCK_FLAG")
+    @Column(name = "LOCK_FLAG")
     private Integer lockFlag;
 
     /**
@@ -49,34 +51,36 @@ public class TransportServicePlan implements Serializable {
     }
 
     @Id
-    @Column(unique=true, nullable=false, precision=10)
+    @Column(unique = true, nullable = false, precision = 10)
     private BigDecimal transportServicePlanId;
-    @Column(precision=10)
-    private BigDecimal vehicleId;
-    @Column(precision=10)
-    private BigDecimal vehicleTypeId;
-    @Column(precision=10)
-    private BigDecimal employeeQuantity;
-    @Column(precision=10)
-    private BigDecimal driverQuantity;
-    @Column(precision=10)
+    @ManyToOne
+    @JoinColumn(name = "employeeId")
+    private Employee employee;
+    @ManyToOne
+    @JoinColumn(name = "partnerId")
+    private Partner partner;
+    @Column(precision = 10, scale = 2)
+    private BigDecimal costPartner;
+    @Column(precision = 10)
     private BigDecimal createdUser;
     private LocalDateTime createdDate;
-    @Column(precision=10)
+    @Column(precision = 10)
     private BigDecimal updatedUser;
     private LocalDateTime updatedDate;
-    @Column(precision=10)
+    @Column(precision = 10)
     private BigDecimal deletedUser;
     private LocalDateTime deletedDate;
     private String updateNote;
-    @Column(length=1)
+    @Column(length = 1)
     private boolean isLast;
-    @OneToMany(mappedBy="transportServicePlan")
+    @OneToMany(mappedBy = "transportServicePlan")
+    @JsonIgnore
     private Set<EmployeeTransportService> employeeTransportService;
-    @OneToMany(mappedBy="transportServicePlan")
+    @OneToMany(mappedBy = "transportServicePlan")
+    @JsonIgnore
     private Set<ImplementTransportation> implementTransportation;
-    @ManyToOne(optional=false)
-    @JoinColumn(name="routeId", nullable=false)
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "routeId", nullable = false)
     private Route route;
 
     /** Default constructor. */
@@ -100,78 +104,6 @@ public class TransportServicePlan implements Serializable {
      */
     public void setTransportServicePlanId(BigDecimal aTransportServicePlanId) {
         transportServicePlanId = aTransportServicePlanId;
-    }
-
-    /**
-     * Access method for vehicleId.
-     *
-     * @return the current value of vehicleId
-     */
-    public BigDecimal getVehicleId() {
-        return vehicleId;
-    }
-
-    /**
-     * Setter method for vehicleId.
-     *
-     * @param aVehicleId the new value for vehicleId
-     */
-    public void setVehicleId(BigDecimal aVehicleId) {
-        vehicleId = aVehicleId;
-    }
-
-    /**
-     * Access method for vehicleTypeId.
-     *
-     * @return the current value of vehicleTypeId
-     */
-    public BigDecimal getVehicleTypeId() {
-        return vehicleTypeId;
-    }
-
-    /**
-     * Setter method for vehicleTypeId.
-     *
-     * @param aVehicleTypeId the new value for vehicleTypeId
-     */
-    public void setVehicleTypeId(BigDecimal aVehicleTypeId) {
-        vehicleTypeId = aVehicleTypeId;
-    }
-
-    /**
-     * Access method for employeeQuantity.
-     *
-     * @return the current value of employeeQuantity
-     */
-    public BigDecimal getEmployeeQuantity() {
-        return employeeQuantity;
-    }
-
-    /**
-     * Setter method for employeeQuantity.
-     *
-     * @param aEmployeeQuantity the new value for employeeQuantity
-     */
-    public void setEmployeeQuantity(BigDecimal aEmployeeQuantity) {
-        employeeQuantity = aEmployeeQuantity;
-    }
-
-    /**
-     * Access method for driverQuantity.
-     *
-     * @return the current value of driverQuantity
-     */
-    public BigDecimal getDriverQuantity() {
-        return driverQuantity;
-    }
-
-    /**
-     * Setter method for driverQuantity.
-     *
-     * @param aDriverQuantity the new value for driverQuantity
-     */
-    public void setDriverQuantity(BigDecimal aDriverQuantity) {
-        driverQuantity = aDriverQuantity;
     }
 
     /**
@@ -376,10 +308,11 @@ public class TransportServicePlan implements Serializable {
      * Compares the key for this instance with another TransportServicePlan.
      *
      * @param other The object to compare to
-     * @return True if other object is instance of class TransportServicePlan and the key objects are equal
+     * @return True if other object is instance of class TransportServicePlan and
+     *         the key objects are equal
      */
     private boolean equalKeys(Object other) {
-        if (this==other) {
+        if (this == other) {
             return true;
         }
         if (!(other instanceof TransportServicePlan)) {
@@ -388,7 +321,8 @@ public class TransportServicePlan implements Serializable {
         TransportServicePlan that = (TransportServicePlan) other;
         Object myTransportServicePlanId = this.getTransportServicePlanId();
         Object yourTransportServicePlanId = that.getTransportServicePlanId();
-        if (myTransportServicePlanId==null ? yourTransportServicePlanId!=null : !myTransportServicePlanId.equals(yourTransportServicePlanId)) {
+        if (myTransportServicePlanId == null ? yourTransportServicePlanId != null
+                : !myTransportServicePlanId.equals(yourTransportServicePlanId)) {
             return false;
         }
         return true;
@@ -402,8 +336,9 @@ public class TransportServicePlan implements Serializable {
      */
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof TransportServicePlan)) return false;
-        return this.equalKeys(other) && ((TransportServicePlan)other).equalKeys(this);
+        if (!(other instanceof TransportServicePlan))
+            return false;
+        return this.equalKeys(other) && ((TransportServicePlan) other).equalKeys(this);
     }
 
     /**
@@ -420,7 +355,7 @@ public class TransportServicePlan implements Serializable {
         } else {
             i = getTransportServicePlanId().hashCode();
         }
-        result = 37*result + i;
+        result = 37 * result + i;
         return result;
     }
 
@@ -446,6 +381,38 @@ public class TransportServicePlan implements Serializable {
         Map<String, Object> ret = new LinkedHashMap<String, Object>(6);
         ret.put("transportServicePlanId", getTransportServicePlanId());
         return ret;
+    }
+
+    public static String getPk() {
+        return PK;
+    }
+
+    public void setLast(boolean isLast) {
+        this.isLast = isLast;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    public Partner getPartner() {
+        return partner;
+    }
+
+    public void setPartner(Partner partner) {
+        this.partner = partner;
+    }
+
+    public BigDecimal getCostPartner() {
+        return costPartner;
+    }
+
+    public void setCostPartner(BigDecimal costPartner) {
+        this.costPartner = costPartner;
     }
 
 }

@@ -14,4 +14,7 @@ public interface IPartnerRepository extends JpaRepository<Partner, BigDecimal> {
 
     @Query(value = "select f.cost from vehicle_agreement v, service_price s, feeonkilometers f where v.vehicle_agreement_id = s.vehicle_agreement_id and s.service_price_id = f.service_price_id and v.partner_id = ?1 and s.vehicle_type_id = ?2", nativeQuery = true)
     public BigDecimal getFeeOnKmOfPartnerByVehicleType(BigDecimal partnerId, BigDecimal vehicleTypeId);
+
+    @Query(value = "select CAST(r.route_length*f.cost As numeric(10)) from vehicle_agreement v, route r, service_price s, feeonkilometers f where v.vehicle_agreement_id = s.vehicle_agreement_id and s.service_price_id = f.service_price_id and r.vehicle_type_id = s.vehicle_type_id and v.partner_id = ?1 and r.route_id = ?2", nativeQuery = true)
+    public BigDecimal getcostOfPartner(BigDecimal partnerId, BigDecimal routeId);
 }

@@ -18,7 +18,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Version;
 
-@Entity(name="PARTNER")
+@Entity(name = "PARTNER")
 public class Partner implements Serializable {
 
     /** Primary key. */
@@ -28,7 +28,7 @@ public class Partner implements Serializable {
      * The optimistic lock. Available via standard bean get/set operations.
      */
     @Version
-    @Column(name="LOCK_FLAG")
+    @Column(name = "LOCK_FLAG")
     private Integer lockFlag;
 
     /**
@@ -50,42 +50,45 @@ public class Partner implements Serializable {
     }
 
     @Id
-    @Column(unique=true, nullable=false, precision=10)
+    @Column(unique = true, nullable = false, precision = 10)
     private BigDecimal partnerId;
     private String partnerName;
-    @OneToMany(mappedBy="partner")
+    @OneToMany(mappedBy = "partner")
     @JsonIgnore
     private Set<EmployeeAgreement> employeeAgreement;
-    @OneToMany(mappedBy="partner")
+    @OneToMany(mappedBy = "partner")
     @JsonIgnore
     private Set<EmployeeBooking> employeeBooking;
-    @OneToMany(mappedBy="partner")
+    @OneToMany(mappedBy = "partner")
     @JsonIgnore
     private Set<Employee> employee;
-    @OneToMany(mappedBy="partner")
+    @OneToMany(mappedBy = "partner")
     @JsonIgnore
     private Set<GroupProductAllowTransport> groupProductAllowTransport;
-    @ManyToOne(optional=false)
-    @JoinColumn(name="partnerTypeId", nullable=false)
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "partnerTypeId", nullable = false)
     private Partnertype partnertype;
-    @OneToMany(mappedBy="partner")
+    @OneToMany(mappedBy = "partner")
     @JsonIgnore
     private Set<PartnerRequestpermonth> partnerRequestpermonth;
-    @OneToMany(mappedBy="partner")
+    @OneToMany(mappedBy = "partner")
     @JsonIgnore
     private Set<VehicleAgreement> vehicleAgreement;
-    @OneToMany(mappedBy="partner")
+    @OneToMany(mappedBy = "partner")
     @JsonIgnore
     private Set<VehicleBooking> vehicleBooking;
-    @OneToMany(mappedBy="partner")
+    @OneToMany(mappedBy = "partner")
     @JsonIgnore
     private Set<VehicleBookingRate> vehicleBookingRate;
-    @OneToMany(mappedBy="partner")
+    @OneToMany(mappedBy = "partner")
     @JsonIgnore
     private Set<VehicleLoadType> vehicleLoadType;
-    @OneToMany(mappedBy="partner")
+    @OneToMany(mappedBy = "partner")
     @JsonIgnore
     private Set<Vehicle> vehicle;
+    @OneToMany(mappedBy = "partner")
+    @JsonIgnore
+    private Set<TransportServicePlan> transportServicesPlans;
 
     /** Default constructor. */
     public Partner() {
@@ -194,7 +197,8 @@ public class Partner implements Serializable {
     /**
      * Setter method for groupProductAllowTransport.
      *
-     * @param aGroupProductAllowTransport the new value for groupProductAllowTransport
+     * @param aGroupProductAllowTransport the new value for
+     *                                    groupProductAllowTransport
      */
     public void setGroupProductAllowTransport(Set<GroupProductAllowTransport> aGroupProductAllowTransport) {
         groupProductAllowTransport = aGroupProductAllowTransport;
@@ -330,10 +334,11 @@ public class Partner implements Serializable {
      * Compares the key for this instance with another Partner.
      *
      * @param other The object to compare to
-     * @return True if other object is instance of class Partner and the key objects are equal
+     * @return True if other object is instance of class Partner and the key objects
+     *         are equal
      */
     private boolean equalKeys(Object other) {
-        if (this==other) {
+        if (this == other) {
             return true;
         }
         if (!(other instanceof Partner)) {
@@ -342,7 +347,7 @@ public class Partner implements Serializable {
         Partner that = (Partner) other;
         Object myPartnerId = this.getPartnerId();
         Object yourPartnerId = that.getPartnerId();
-        if (myPartnerId==null ? yourPartnerId!=null : !myPartnerId.equals(yourPartnerId)) {
+        if (myPartnerId == null ? yourPartnerId != null : !myPartnerId.equals(yourPartnerId)) {
             return false;
         }
         return true;
@@ -356,8 +361,9 @@ public class Partner implements Serializable {
      */
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof Partner)) return false;
-        return this.equalKeys(other) && ((Partner)other).equalKeys(this);
+        if (!(other instanceof Partner))
+            return false;
+        return this.equalKeys(other) && ((Partner) other).equalKeys(this);
     }
 
     /**
@@ -374,7 +380,7 @@ public class Partner implements Serializable {
         } else {
             i = getPartnerId().hashCode();
         }
-        result = 37*result + i;
+        result = 37 * result + i;
         return result;
     }
 
@@ -400,6 +406,18 @@ public class Partner implements Serializable {
         Map<String, Object> ret = new LinkedHashMap<String, Object>(6);
         ret.put("partnerId", getPartnerId());
         return ret;
+    }
+
+    public static String getPk() {
+        return PK;
+    }
+
+    public Set<TransportServicePlan> getTransportServicesPlans() {
+        return transportServicesPlans;
+    }
+
+    public void setTransportServicesPlans(Set<TransportServicePlan> transportServicesPlans) {
+        this.transportServicesPlans = transportServicesPlans;
     }
 
 }

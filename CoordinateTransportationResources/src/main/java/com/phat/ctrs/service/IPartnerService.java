@@ -14,4 +14,6 @@ public interface IPartnerService {
     public VehicleLoadType getVehicleLoadTypesByPartnerId(BigDecimal partnerId, BigDecimal vehicleTypeId);
 
     public BigDecimal getResourceOfPartner(BigDecimal partnerId, BigDecimal vehicleTypeId);
+
+    public BigDecimal getcostOfPartner(BigDecimal partnerId, BigDecimal routeId);
 }

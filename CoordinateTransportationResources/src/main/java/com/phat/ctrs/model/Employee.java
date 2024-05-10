@@ -8,6 +8,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -16,7 +18,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Version;
 
-@Entity(name="EMPLOYEE")
+@Entity(name = "EMPLOYEE")
 public class Employee implements Serializable {
 
     /** Primary key. */
@@ -26,7 +28,7 @@ public class Employee implements Serializable {
      * The optimistic lock. Available via standard bean get/set operations.
      */
     @Version
-    @Column(name="LOCK_FLAG")
+    @Column(name = "LOCK_FLAG")
     private Integer lockFlag;
 
     /**
@@ -48,43 +50,56 @@ public class Employee implements Serializable {
     }
 
     @Id
-    @Column(unique=true, nullable=false, precision=10)
+    @Column(unique = true, nullable = false, precision = 10)
     private BigDecimal employeeId;
     private String employeeName;
     private String phoneNumber;
-    @Column(length=1)
+    @Column(length = 1)
     private boolean gender;
-    @Column(length=1)
+    @Column(length = 1)
     private boolean isActive;
-    @OneToMany(mappedBy="employee")
+    @OneToMany(mappedBy = "employee")
+    @JsonIgnore
     private Set<CurrentDebt> currentDebt;
-    @OneToMany(mappedBy="employee")
+    @OneToMany(mappedBy = "employee")
+    @JsonIgnore
     private Set<DebtDetail> debtDetail;
-    @OneToMany(mappedBy="employee")
+    @OneToMany(mappedBy = "employee")
+    @JsonIgnore
     private Set<DrivingHourInfo> drivingHourInfo;
     @ManyToOne
-    @JoinColumn(name="addressId")
+    @JoinColumn(name = "addressId")
     private Address address;
-    @OneToMany(mappedBy="employee")
+    @OneToMany(mappedBy = "employee")
+    @JsonIgnore
     private Set<EmployeeAgreement> employeeAgreement;
     @ManyToOne
-    @JoinColumn(name="partnerId")
+    @JoinColumn(name = "partnerId")
     private Partner partner;
-    @OneToMany(mappedBy="employee")
+    @OneToMany(mappedBy = "employee")
+    @JsonIgnore
     private Set<EmployeeRequestpermonth> employeeRequestpermonth;
-    @OneToMany(mappedBy="employee")
+    @OneToMany(mappedBy = "employee")
+    @JsonIgnore
     private Set<EmployeeShift> employeeShift;
-    @OneToMany(mappedBy="employee")
+    @OneToMany(mappedBy = "employee")
+    @JsonIgnore
     private Set<EmployeeSkill> employeeSkill;
     @ManyToOne
-    @JoinColumn(name="storeId")
+    @JoinColumn(name = "storeId")
     private Store store;
-    @OneToMany(mappedBy="employee")
+    @OneToMany(mappedBy = "employee")
+    @JsonIgnore
     private Set<EverageCustomerRating> everageCustomerRating;
-    @OneToMany(mappedBy="employee")
+    @OneToMany(mappedBy = "employee")
+    @JsonIgnore
     private Set<LimitDebt> limitDebt;
-    @OneToMany(mappedBy="employee")
+    @OneToMany(mappedBy = "employee")
+    @JsonIgnore
     private Set<RatingEmployeeSkill> ratingEmployeeSkill;
+    @OneToMany(mappedBy = "employee")
+    @JsonIgnore
+    private Set<TransportServicePlan> transportServicePlan;
 
     /** Default constructor. */
     public Employee() {
@@ -419,10 +434,11 @@ public class Employee implements Serializable {
      * Compares the key for this instance with another Employee.
      *
      * @param other The object to compare to
-     * @return True if other object is instance of class Employee and the key objects are equal
+     * @return True if other object is instance of class Employee and the key
+     *         objects are equal
      */
     private boolean equalKeys(Object other) {
-        if (this==other) {
+        if (this == other) {
             return true;
         }
         if (!(other instanceof Employee)) {
@@ -431,7 +447,7 @@ public class Employee implements Serializable {
         Employee that = (Employee) other;
         Object myEmployeeId = this.getEmployeeId();
         Object yourEmployeeId = that.getEmployeeId();
-        if (myEmployeeId==null ? yourEmployeeId!=null : !myEmployeeId.equals(yourEmployeeId)) {
+        if (myEmployeeId == null ? yourEmployeeId != null : !myEmployeeId.equals(yourEmployeeId)) {
             return false;
         }
         return true;
@@ -445,8 +461,9 @@ public class Employee implements Serializable {
      */
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof Employee)) return false;
-        return this.equalKeys(other) && ((Employee)other).equalKeys(this);
+        if (!(other instanceof Employee))
+            return false;
+        return this.equalKeys(other) && ((Employee) other).equalKeys(this);
     }
 
     /**
@@ -463,7 +480,7 @@ public class Employee implements Serializable {
         } else {
             i = getEmployeeId().hashCode();
         }
-        result = 37*result + i;
+        result = 37 * result + i;
         return result;
     }
 
@@ -489,6 +506,22 @@ public class Employee implements Serializable {
         Map<String, Object> ret = new LinkedHashMap<String, Object>(6);
         ret.put("employeeId", getEmployeeId());
         return ret;
+    }
+
+    public static String getPk() {
+        return PK;
+    }
+
+    public void setActive(boolean isActive) {
+        this.isActive = isActive;
+    }
+
+    public Set<TransportServicePlan> getTransportServicePlan() {
+        return transportServicePlan;
+    }
+
+    public void setTransportServicePlan(Set<TransportServicePlan> transportServicePlan) {
+        this.transportServicePlan = transportServicePlan;
     }
 
 }

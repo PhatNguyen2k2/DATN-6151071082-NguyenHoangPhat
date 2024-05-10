@@ -45,4 +45,9 @@ public class PartnerServiceImpl implements IPartnerService {
         return transportResourceRepository.getResourceOfPartner(partnerId, vehicleTypeId);
     }
 
+    @Override
+    public BigDecimal getcostOfPartner(BigDecimal partnerId, BigDecimal routeId) {
+        return partnerRepository.getcostOfPartner(partnerId, routeId);
+    }
+
 }
