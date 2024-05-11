@@ -8,13 +8,15 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Version;
 
-@Entity(name="VEHICLE_RENTAL_AGREEMENT_TYPE")
+@Entity(name = "VEHICLE_RENTAL_AGREEMENT_TYPE")
 public class VehicleRentalAgreementType implements Serializable {
 
     /** Primary key. */
@@ -24,7 +26,7 @@ public class VehicleRentalAgreementType implements Serializable {
      * The optimistic lock. Available via standard bean get/set operations.
      */
     @Version
-    @Column(name="LOCK_FLAG")
+    @Column(name = "LOCK_FLAG")
     private Integer lockFlag;
 
     /**
@@ -46,12 +48,13 @@ public class VehicleRentalAgreementType implements Serializable {
     }
 
     @Id
-    @Column(unique=true, nullable=false, precision=10)
+    @Column(unique = true, nullable = false, precision = 10)
     private BigDecimal vehicleRentalAgreementTypeId;
     private String vehicleRentalAgreementTypeName;
-    @Column(length=1)
+    @Column(length = 1)
     private boolean isActive;
-    @OneToMany(mappedBy="vehicleRentalAgreementType")
+    @OneToMany(mappedBy = "vehicleRentalAgreementType")
+    @JsonIgnore
     private Set<VehicleAgreement> vehicleAgreement;
 
     /** Default constructor. */
@@ -71,7 +74,8 @@ public class VehicleRentalAgreementType implements Serializable {
     /**
      * Setter method for vehicleRentalAgreementTypeId.
      *
-     * @param aVehicleRentalAgreementTypeId the new value for vehicleRentalAgreementTypeId
+     * @param aVehicleRentalAgreementTypeId the new value for
+     *                                      vehicleRentalAgreementTypeId
      */
     public void setVehicleRentalAgreementTypeId(BigDecimal aVehicleRentalAgreementTypeId) {
         vehicleRentalAgreementTypeId = aVehicleRentalAgreementTypeId;
@@ -89,7 +93,8 @@ public class VehicleRentalAgreementType implements Serializable {
     /**
      * Setter method for vehicleRentalAgreementTypeName.
      *
-     * @param aVehicleRentalAgreementTypeName the new value for vehicleRentalAgreementTypeName
+     * @param aVehicleRentalAgreementTypeName the new value for
+     *                                        vehicleRentalAgreementTypeName
      */
     public void setVehicleRentalAgreementTypeName(String aVehicleRentalAgreementTypeName) {
         vehicleRentalAgreementTypeName = aVehicleRentalAgreementTypeName;
@@ -135,10 +140,11 @@ public class VehicleRentalAgreementType implements Serializable {
      * Compares the key for this instance with another VehicleRentalAgreementType.
      *
      * @param other The object to compare to
-     * @return True if other object is instance of class VehicleRentalAgreementType and the key objects are equal
+     * @return True if other object is instance of class VehicleRentalAgreementType
+     *         and the key objects are equal
      */
     private boolean equalKeys(Object other) {
-        if (this==other) {
+        if (this == other) {
             return true;
         }
         if (!(other instanceof VehicleRentalAgreementType)) {
@@ -147,7 +153,8 @@ public class VehicleRentalAgreementType implements Serializable {
         VehicleRentalAgreementType that = (VehicleRentalAgreementType) other;
         Object myVehicleRentalAgreementTypeId = this.getVehicleRentalAgreementTypeId();
         Object yourVehicleRentalAgreementTypeId = that.getVehicleRentalAgreementTypeId();
-        if (myVehicleRentalAgreementTypeId==null ? yourVehicleRentalAgreementTypeId!=null : !myVehicleRentalAgreementTypeId.equals(yourVehicleRentalAgreementTypeId)) {
+        if (myVehicleRentalAgreementTypeId == null ? yourVehicleRentalAgreementTypeId != null
+                : !myVehicleRentalAgreementTypeId.equals(yourVehicleRentalAgreementTypeId)) {
             return false;
         }
         return true;
@@ -161,8 +168,9 @@ public class VehicleRentalAgreementType implements Serializable {
      */
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof VehicleRentalAgreementType)) return false;
-        return this.equalKeys(other) && ((VehicleRentalAgreementType)other).equalKeys(this);
+        if (!(other instanceof VehicleRentalAgreementType))
+            return false;
+        return this.equalKeys(other) && ((VehicleRentalAgreementType) other).equalKeys(this);
     }
 
     /**
@@ -179,7 +187,7 @@ public class VehicleRentalAgreementType implements Serializable {
         } else {
             i = getVehicleRentalAgreementTypeId().hashCode();
         }
-        result = 37*result + i;
+        result = 37 * result + i;
         return result;
     }
 

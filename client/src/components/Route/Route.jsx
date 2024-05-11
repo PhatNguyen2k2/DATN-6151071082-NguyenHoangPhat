@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import "./Route.scss";
 const Route = (props) => {
   const [data, setData] = useState({});
-  useEffect(() => {
+  const [plan, setPlan] = useState({});
+  useMemo(() => {
     if (props.data) {
       setData(props.data);
     }
-  }, [props.data]);
+    if (props.plans) {
+      setPlan(props.plans);
+    }
+  }, [props.data, props.plans]);
   return (
     <div className="route-container">
       {data && (
@@ -14,11 +18,11 @@ const Route = (props) => {
           <div className="route-info">
             <div className="left-info">
               <div className="info-item">
-                <span className="label">Route ID:</span>
+                <span className="label">Mã tuyến:</span>
                 <span className="value">{data.routeId}</span>
               </div>
               <div className="info-item">
-                <span className="label">Begin Time:</span>
+                <span className="label">Thời gian bắt đầu:</span>
                 <span className="value">
                   {String(data.beginTime).slice(11) +
                     " " +
@@ -26,7 +30,7 @@ const Route = (props) => {
                 </span>
               </div>
               <div className="info-item">
-                <span className="label">End Time:</span>
+                <span className="label">Thời gian kết thúc:</span>
                 <span className="value">
                   {String(data.endTime).slice(11) +
                     " " +
@@ -34,7 +38,7 @@ const Route = (props) => {
                 </span>
               </div>
               <div className="info-item">
-                <span className="label">Begin Address:</span>
+                <span className="label">Địa chỉ bắt đầu:</span>
                 <span className="value">
                   {data.address?.addressDetail +
                     ", " +
@@ -49,7 +53,7 @@ const Route = (props) => {
                 </span>
               </div>
               <div className="info-item">
-                <span className="label">End Address:</span>
+                <span className="label">Địa chỉ kết thúc:</span>
                 <span className="value">
                   {data.address2?.addressDetail +
                     ", " +
@@ -63,38 +67,55 @@ const Route = (props) => {
                       ?.countryName}
                 </span>
               </div>
-
               <div className="info-item">
-                <span className="label">Route Length:</span>
+                <span className="label">Độ dài:</span>
                 <span className="value">{data.routeLength} km</span>
+              </div>
+              <div className="info-item">
+                <span className="label">Nhà cung cấp:</span>
+                {Object.keys(plan).length > 0 ? (
+                  <span className="value" style={{ color: "blueviolet" }}>
+                    {plan?.partner?.partnerName} - {plan?.costPartner} VND
+                  </span>
+                ) : (
+                  <span className="value" style={{ color: "indigo" }}>
+                    Chưa có nhà cung cấp
+                  </span>
+                )}
               </div>
             </div>
             <div className="right-info">
               <div className="info-item">
-                <span className="label">Transport Form:</span>
-                <span className="value">
-                  {data.transportForm?.transportFormName}
-                </span>
+                <span className="label">Loại hình vận chuyển:</span>
+                {data.transportForm?.transportFormId === 1 ? (
+                  <span className="value" style={{ color: "green" }}>
+                    {data.transportForm?.transportFormName}
+                  </span>
+                ) : (
+                  <span className="value" style={{ color: "red" }}>
+                    {data.transportForm?.transportFormName}
+                  </span>
+                )}
               </div>
               <div className="info-item">
-                <span className="label">Vehicle Type:</span>
+                <span className="label">Loại xe:</span>
                 <span className="value">
                   {data.vehicleType?.vehiclegroup?.vehicleGroupName}
                 </span>
                 <span className="sub-value">
-                  Length: {data.vehicleType?.length} m
+                  Dài: {data.vehicleType?.length} m
                 </span>
                 <span className="sub-value">
-                  Weight: {data.vehicleType?.weight} kg
+                  Nặng: {data.vehicleType?.weight} kg
                 </span>
                 <span className="sub-value">
-                  Width: {data.vehicleType?.width} m
+                  Rộng: {data.vehicleType?.width} m
                 </span>
                 <span className="sub-value">
-                  Height: {data.vehicleType?.height} m
+                  Cao: {data.vehicleType?.height} m
                 </span>
                 <span className="sub-value">
-                  Volume: {data.vehicleType?.volume} m3
+                  Thể tích: {data.vehicleType?.volume} m3
                 </span>
               </div>
             </div>

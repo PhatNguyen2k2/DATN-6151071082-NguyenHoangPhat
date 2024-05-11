@@ -1,6 +1,5 @@
 package com.phat.ctrs.controller;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,11 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.phat.ctrs.model.Partner;
 import com.phat.ctrs.model.Route;
 import com.phat.ctrs.model.TransportServicePlan;
 import com.phat.ctrs.service.IPartnerService;
@@ -42,12 +38,5 @@ public class RouteController {
 		planService.updateCost();
 		return new ResponseEntity<List<TransportServicePlan>>(planService.getAll(),
 				HttpStatus.OK);
-	}
-
-	@GetMapping("/partner")
-	@ResponseBody
-	private ResponseEntity<List<Partner>> getPartnerByVehicleType(@RequestParam String id) {
-		return new ResponseEntity<List<Partner>>(
-				partnerService.getPartnersByVehicleType(BigDecimal.valueOf(Integer.valueOf(id))), HttpStatus.OK);
 	}
 }
