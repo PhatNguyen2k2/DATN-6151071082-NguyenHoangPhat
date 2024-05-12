@@ -9,6 +9,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -17,7 +19,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Version;
 
-@Entity(name="SERVICE_PRICE")
+@Entity(name = "SERVICE_PRICE")
 public class ServicePrice implements Serializable {
 
     /** Primary key. */
@@ -27,7 +29,7 @@ public class ServicePrice implements Serializable {
      * The optimistic lock. Available via standard bean get/set operations.
      */
     @Version
-    @Column(name="LOCK_FLAG")
+    @Column(name = "LOCK_FLAG")
     private Integer lockFlag;
 
     /**
@@ -49,51 +51,53 @@ public class ServicePrice implements Serializable {
     }
 
     @Id
-    @Column(unique=true, nullable=false, precision=10)
+    @Column(unique = true, nullable = false, precision = 10)
     private BigDecimal servicePriceId;
-    @Column(precision=10)
+    @Column(precision = 10)
     private BigDecimal beginLocation;
-    @Column(precision=10)
+    @Column(precision = 10)
     private BigDecimal endLocation;
-    @Column(name="MOQ", precision=10)
+    @Column(name = "MOQ", precision = 10)
     private BigDecimal moq;
-    @Column(precision=10, scale=2)
+    @Column(precision = 10, scale = 2)
     private BigDecimal costOfDay;
-    @Column(precision=10)
+    @Column(precision = 10)
     private BigDecimal chargeType;
-    @Column(precision=10, scale=2)
+    @Column(precision = 10, scale = 2)
     private BigDecimal loadingFee;
-    @Column(precision=10, scale=2)
+    @Column(precision = 10, scale = 2)
     private BigDecimal holidayFee;
-    @Column(precision=10, scale=2)
+    @Column(precision = 10, scale = 2)
     private BigDecimal nightFee;
-    @Column(precision=10, scale=2)
+    @Column(precision = 10, scale = 2)
     private BigDecimal addingStopLocationFee;
-    @Column(precision=10, scale=2)
+    @Column(precision = 10, scale = 2)
     private BigDecimal waitingTimeFee;
-    @Column(precision=10, scale=2)
+    @Column(precision = 10, scale = 2)
     private BigDecimal tolls;
-    @Column(precision=10)
+    @Column(precision = 10)
     private BigDecimal createdUser;
     private LocalDateTime createdDate;
-    @Column(precision=10)
+    @Column(precision = 10)
     private BigDecimal updatedUser;
     private LocalDateTime updatedDate;
-    @Column(precision=10)
+    @Column(precision = 10)
     private BigDecimal deletedUser;
     private LocalDateTime deletedDate;
     private String updateNote;
-    @Column(length=1)
+    @Column(length = 1)
     private boolean isLast;
-    @OneToMany(mappedBy="servicePrice")
+    @OneToMany(mappedBy = "servicePrice")
+    @JsonIgnore
     private Set<FeeByTransportForm> feeByTransportForm;
-    @OneToMany(mappedBy="servicePrice")
+    @OneToMany(mappedBy = "servicePrice")
+    @JsonIgnore
     private Set<Feeonkilometers> feeonkilometers;
-    @ManyToOne(optional=false)
-    @JoinColumn(name="vehicleAgreementId", nullable=false)
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "vehicleAgreementId", nullable = false)
     private VehicleAgreement vehicleAgreement;
-    @ManyToOne(optional=false)
-    @JoinColumn(name="vehicleTypeId", nullable=false)
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "vehicleTypeId", nullable = false)
     private Vehicletype vehicletype;
 
     /** Default constructor. */
@@ -537,10 +541,11 @@ public class ServicePrice implements Serializable {
      * Compares the key for this instance with another ServicePrice.
      *
      * @param other The object to compare to
-     * @return True if other object is instance of class ServicePrice and the key objects are equal
+     * @return True if other object is instance of class ServicePrice and the key
+     *         objects are equal
      */
     private boolean equalKeys(Object other) {
-        if (this==other) {
+        if (this == other) {
             return true;
         }
         if (!(other instanceof ServicePrice)) {
@@ -549,7 +554,7 @@ public class ServicePrice implements Serializable {
         ServicePrice that = (ServicePrice) other;
         Object myServicePriceId = this.getServicePriceId();
         Object yourServicePriceId = that.getServicePriceId();
-        if (myServicePriceId==null ? yourServicePriceId!=null : !myServicePriceId.equals(yourServicePriceId)) {
+        if (myServicePriceId == null ? yourServicePriceId != null : !myServicePriceId.equals(yourServicePriceId)) {
             return false;
         }
         return true;
@@ -563,8 +568,9 @@ public class ServicePrice implements Serializable {
      */
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof ServicePrice)) return false;
-        return this.equalKeys(other) && ((ServicePrice)other).equalKeys(this);
+        if (!(other instanceof ServicePrice))
+            return false;
+        return this.equalKeys(other) && ((ServicePrice) other).equalKeys(this);
     }
 
     /**
@@ -581,7 +587,7 @@ public class ServicePrice implements Serializable {
         } else {
             i = getServicePriceId().hashCode();
         }
-        result = 37*result + i;
+        result = 37 * result + i;
         return result;
     }
 

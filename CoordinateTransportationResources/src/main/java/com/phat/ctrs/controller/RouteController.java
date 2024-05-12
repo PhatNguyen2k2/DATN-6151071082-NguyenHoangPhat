@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.phat.ctrs.model.Route;
 import com.phat.ctrs.model.TransportServicePlan;
+import com.phat.ctrs.model.Vehicletype;
+import com.phat.ctrs.repository.IVehicleTypeRepository;
 import com.phat.ctrs.service.IPartnerService;
 import com.phat.ctrs.service.IRouteService;
 import com.phat.ctrs.service.ITransportServicePlanService;
@@ -26,10 +28,17 @@ public class RouteController {
 	IPartnerService partnerService;
 	@Autowired
 	ITransportServicePlanService planService;
+	@Autowired
+	IVehicleTypeRepository typeRepository;
 
 	@GetMapping("")
 	private ResponseEntity<List<Route>> getAllRoute() {
 		return new ResponseEntity<List<Route>>(routeService.getAllRoute(), HttpStatus.OK);
+	}
+
+	@GetMapping("/vehicleType")
+	private ResponseEntity<List<Vehicletype>> getAllVehicleType() {
+		return new ResponseEntity<List<Vehicletype>>(typeRepository.findAll(), HttpStatus.OK);
 	}
 
 	@GetMapping("/choosePartner")

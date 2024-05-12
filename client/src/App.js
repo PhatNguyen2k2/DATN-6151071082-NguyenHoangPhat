@@ -9,6 +9,8 @@ const ViewPartner = React.lazy(() => import("./pages/ViewPartner"));
 const ViewVehicleAgreemnet = React.lazy(() =>
   import("./pages/ViewVehicleAgreement")
 );
+const ViewServicePrice = React.lazy(() => import("./pages/ViewServicePrice"));
+const ViewVehicleType = React.lazy(() => import("./pages/ViewVehicleType"));
 function App() {
   return (
     <>
@@ -20,6 +22,8 @@ function App() {
             path="/declare/vehicleAgreement"
             element={<ViewVehicleAgreemnet />}
           />
+          <Route path="declare/servicePrice" element={<ViewServicePrice />} />
+          <Route path="declare/vehicleType" element={<ViewVehicleType />} />
         </Routes>
       </Suspense>
     </>

@@ -61,12 +61,12 @@ const Header = () => {
                   Hợp đồng thuê xe
                 </NavDropdown.Item>
                 <NavDropdown.Item
-                  onClick={() => navigate("/declare/service-price")}
+                  onClick={() => navigate("/declare/servicePrice")}
                 >
                   Bảng giá dịch vụ
                 </NavDropdown.Item>
                 <NavDropdown.Item
-                  onClick={() => navigate("/declare/vehicle/type")}
+                  onClick={() => navigate("/declare/vehicleType")}
                 >
                   Loại xe
                 </NavDropdown.Item>
