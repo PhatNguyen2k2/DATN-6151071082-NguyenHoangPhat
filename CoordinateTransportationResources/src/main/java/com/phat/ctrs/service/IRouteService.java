@@ -8,4 +8,6 @@ public interface IRouteService {
 	public List<Route> getAllRoute();
 
 	public void calculateCost();
+
+	public void calculateDebt();
 }

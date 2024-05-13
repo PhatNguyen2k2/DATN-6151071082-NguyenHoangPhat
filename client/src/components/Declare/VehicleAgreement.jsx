@@ -13,7 +13,6 @@ const VehicleAgreement = () => {
   useEffect(() => {
     getVehicleAgreement();
   }, []);
-  console.log(vehicleAgreement);
   return (
     <Container fluid>
       <div style={{ textAlign: "center" }}>
@@ -28,7 +27,6 @@ const VehicleAgreement = () => {
             <th>Loại hình hợp đồng</th>
             <th>Gia hạn hợp đồng</th>
             <th>Số lần tối đa vi phạm</th>
-            <th></th>
           </tr>
         </thead>
         <tbody>

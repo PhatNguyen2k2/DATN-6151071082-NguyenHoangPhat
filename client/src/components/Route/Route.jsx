@@ -115,7 +115,7 @@ const Route = (props) => {
                   Cao: {data.vehicleType?.height} m
                 </span>
                 <span className="sub-value">
-                  Thể tích: {data.vehicleType?.volume} m3
+                  Thể tích: {data.vehicleType?.volume} &#13221;
                 </span>
               </div>
             </div>

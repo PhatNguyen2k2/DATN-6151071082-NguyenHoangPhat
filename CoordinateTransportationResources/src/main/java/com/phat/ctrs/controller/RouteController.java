@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.phat.ctrs.model.Route;
+import com.phat.ctrs.model.Shift;
 import com.phat.ctrs.model.TransportServicePlan;
 import com.phat.ctrs.model.Vehicletype;
+import com.phat.ctrs.repository.IShiftRespository;
 import com.phat.ctrs.repository.IVehicleTypeRepository;
 import com.phat.ctrs.service.IPartnerService;
 import com.phat.ctrs.service.IRouteService;
@@ -30,10 +32,17 @@ public class RouteController {
 	ITransportServicePlanService planService;
 	@Autowired
 	IVehicleTypeRepository typeRepository;
+	@Autowired
+	IShiftRespository shiftRespository;
 
 	@GetMapping("")
 	private ResponseEntity<List<Route>> getAllRoute() {
 		return new ResponseEntity<List<Route>>(routeService.getAllRoute(), HttpStatus.OK);
+	}
+
+	@GetMapping("/shift")
+	private ResponseEntity<List<Shift>> getAllShift() {
+		return new ResponseEntity<List<Shift>>(shiftRespository.findAll(), HttpStatus.OK);
 	}
 
 	@GetMapping("/vehicleType")

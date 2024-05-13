@@ -61,6 +61,11 @@ const Header = () => {
                   Hợp đồng thuê xe
                 </NavDropdown.Item>
                 <NavDropdown.Item
+                  onClick={() => navigate("/declare/vehicleResource")}
+                >
+                  Nguồn lực nhà cung cấp
+                </NavDropdown.Item>
+                <NavDropdown.Item
                   onClick={() => navigate("/declare/servicePrice")}
                 >
                   Bảng giá dịch vụ

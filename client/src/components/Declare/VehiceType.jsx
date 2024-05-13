@@ -42,7 +42,7 @@ const VehicleType = () => {
                 <td>{v.width} m</td>
                 <td>{v.height} m</td>
                 <td>{v.weight} kg</td>
-                <td>{v.volume} m3</td>
+                <td>{v.volume} &#13221;</td>
               </tr>
             ))}
         </tbody>

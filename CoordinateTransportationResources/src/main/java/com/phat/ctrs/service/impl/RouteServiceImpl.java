@@ -97,4 +97,12 @@ public class RouteServiceImpl implements IRouteService {
 					}
 				});
 	}
+
+	@Override
+	public void calculateDebt() {
+		List<Route> routes = this.getAllRoute();
+		routes.forEach(r -> {
+
+		});
+	}
 }

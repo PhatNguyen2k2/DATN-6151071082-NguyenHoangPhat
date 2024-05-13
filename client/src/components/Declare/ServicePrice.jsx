@@ -11,15 +11,26 @@ const ServicePrice = () => {
     );
     setVehicleType(vehicleTypes.data);
   };
+
   const getServicePrice = async (item) => {
     const servicePrices = await axios.get(
       `http://localhost:8080/api/partner/servicePrice/${item}`
     );
-    setServicePrice(servicePrices.data);
+    const servicePriceData = servicePrices.data;
+    servicePriceData.map(async (p) => {
+      const res = await axios.get(
+        `http://localhost:8080/api/partner/vehicleLoadType?partner=${p.servicePrice.vehicleAgreement.partner.partnerId}&vehicleType=${p.servicePrice.vehicletype.vehicleTypeId}`
+      );
+      p.shift = res.data.shift.shiftName;
+    });
+
+    setServicePrice(servicePriceData);
   };
+
   useEffect(() => {
     getVehicleType();
-  }, []);
+  }, [servicePrice]);
+
   return (
     <Container fluid>
       <div style={{ textAlign: "center" }}>
@@ -54,6 +65,7 @@ const ServicePrice = () => {
             <th>Phí thêm điểm dừng</th>
             <th>Phí thời gian chờ</th>
             <th>Phí cầu đường</th>
+            <th>Thời gian hoạt động</th>
           </tr>
         </thead>
         <tbody>
@@ -93,10 +105,11 @@ const ServicePrice = () => {
                   VND
                 </td>
                 <td>{p.servicePrice.tolls ? p.servicePrice.tolls : 0} VND</td>
+                <td>{p.shift}</td>
               </tr>
             ))
           ) : (
-            <span>Hãy chọn loại xe</span>
+            <th colSpan={13}>Hãy chọn loại xe</th>
           )}
         </tbody>
       </Table>
