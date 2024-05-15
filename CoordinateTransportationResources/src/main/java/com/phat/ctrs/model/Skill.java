@@ -9,6 +9,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -17,7 +19,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Version;
 
-@Entity(name="SKILL")
+@Entity(name = "SKILL")
 public class Skill implements Serializable {
 
     /** Primary key. */
@@ -27,7 +29,7 @@ public class Skill implements Serializable {
      * The optimistic lock. Available via standard bean get/set operations.
      */
     @Version
-    @Column(name="LOCK_FLAG")
+    @Column(name = "LOCK_FLAG")
     private Integer lockFlag;
 
     /**
@@ -49,34 +51,42 @@ public class Skill implements Serializable {
     }
 
     @Id
-    @Column(unique=true, nullable=false, precision=10)
+    @Column(unique = true, nullable = false, precision = 10)
     private BigDecimal skillId;
     private String skillName;
-    @Column(precision=10)
+    @Column(precision = 10)
     private BigDecimal createdUser;
     private LocalDateTime createdDate;
-    @Column(precision=10)
+    @Column(precision = 10)
     private BigDecimal updatedUser;
     private LocalDateTime updatedDate;
-    @Column(precision=10)
+    @Column(precision = 10)
     private BigDecimal deletedUser;
     private LocalDateTime deletedDate;
     private String updateNote;
-    @Column(length=1)
+    @Column(length = 1)
     private boolean isLast;
-    @OneToMany(mappedBy="skill")
+    @OneToMany(mappedBy = "skill")
+    @JsonIgnore
     private Set<EmployeeLoad> employeeLoad;
-    @OneToMany(mappedBy="skill")
+    @OneToMany(mappedBy = "skill")
+    @JsonIgnore
     private Set<EmployeeSkill> employeeSkill;
-    @OneToMany(mappedBy="skill")
+    @OneToMany(mappedBy = "skill")
+    @JsonIgnore
     private Set<RatingEmployeeSkill> ratingEmployeeSkill;
-    @OneToMany(mappedBy="skill")
+    @OneToMany(mappedBy = "skill")
+    @JsonIgnore
     private Set<SkillByVehicletype> skillByVehicletype;
     @ManyToOne
-    @JoinColumn(name="categorySkillId")
+    @JoinColumn(name = "categorySkillId")
     private CategorySkill categorySkill;
-    @OneToMany(mappedBy="skill")
+    @OneToMany(mappedBy = "skill")
+    @JsonIgnore
     private Set<SkillSubgroup> skillSubgroup;
+    @OneToMany(mappedBy = "skill")
+    @JsonIgnore
+    private Set<Route> route;
 
     /** Default constructor. */
     public Skill() {
@@ -375,10 +385,11 @@ public class Skill implements Serializable {
      * Compares the key for this instance with another Skill.
      *
      * @param other The object to compare to
-     * @return True if other object is instance of class Skill and the key objects are equal
+     * @return True if other object is instance of class Skill and the key objects
+     *         are equal
      */
     private boolean equalKeys(Object other) {
-        if (this==other) {
+        if (this == other) {
             return true;
         }
         if (!(other instanceof Skill)) {
@@ -387,7 +398,7 @@ public class Skill implements Serializable {
         Skill that = (Skill) other;
         Object mySkillId = this.getSkillId();
         Object yourSkillId = that.getSkillId();
-        if (mySkillId==null ? yourSkillId!=null : !mySkillId.equals(yourSkillId)) {
+        if (mySkillId == null ? yourSkillId != null : !mySkillId.equals(yourSkillId)) {
             return false;
         }
         return true;
@@ -401,8 +412,9 @@ public class Skill implements Serializable {
      */
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof Skill)) return false;
-        return this.equalKeys(other) && ((Skill)other).equalKeys(this);
+        if (!(other instanceof Skill))
+            return false;
+        return this.equalKeys(other) && ((Skill) other).equalKeys(this);
     }
 
     /**
@@ -419,7 +431,7 @@ public class Skill implements Serializable {
         } else {
             i = getSkillId().hashCode();
         }
-        result = 37*result + i;
+        result = 37 * result + i;
         return result;
     }
 
@@ -445,6 +457,22 @@ public class Skill implements Serializable {
         Map<String, Object> ret = new LinkedHashMap<String, Object>(6);
         ret.put("skillId", getSkillId());
         return ret;
+    }
+
+    public static String getPk() {
+        return PK;
+    }
+
+    public void setLast(boolean isLast) {
+        this.isLast = isLast;
+    }
+
+    public Set<Route> getRoute() {
+        return route;
+    }
+
+    public void setRoute(Set<Route> route) {
+        this.route = route;
     }
 
 }

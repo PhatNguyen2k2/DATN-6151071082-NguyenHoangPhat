@@ -11,36 +11,38 @@ import com.google.ortools.sat.LinearExprBuilder;
 import com.google.ortools.sat.Literal;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.IntStream;
 
 public class OrToolForBookingEmployee {
-    public static void or() {
+    public static HashMap<Integer, List<Integer>> or(int[][] costs, int[] max_debt, int[][] times,
+            int[][][] workerShift) {
         Loader.loadNativeLibraries();
         // Data
-        int[][] costs = {
-                { 120, 150, 80 },
-                { 150, 225, 90 },
-                { 156, 195, 104 },
-        };
+        // int[][] costs = {
+        // { 120, 150, 80 },
+        // { 150, 225, 90 },
+        // { 156, 195, 104 },
+        // };
 
-        int[] skillRequire = { 1, 2, 3 };
-        int[][] workerSkill = {
-                { 1, 2, 3 }, // worker 1
-                { 1, 2, 3 }, // worker 2
-                { 1, 2, 3 }, // worker 3
-        };
+        // int[] skillRequire = { 1, 2, 3 };
+        // int[][] workerSkill = {
+        // { 1, 2, 3 }, // worker 1
+        // { 1, 2, 3 }, // worker 2
+        // { 1, 2, 3 }, // worker 3
+        // };
 
-        int[] max_debt = { 1, 1, 3 };
+        // int[] max_debt = { 1, 1, 3 };
 
-        int[][] times = { { 0, 10 }, { 11, 20 }, { 5, 25 } };
-        int[][][] workerShift = {
-                { { 0, 4 } },
-                { { 10, 11 } },
-                { { 10, 11 } }
-        };
+        // int[][] times = { { 0, 10 }, { 11, 20 }, { 5, 25 } };
+        // int[][][] workerShift = {
+        // { { 0, 4 } },
+        // { { 10, 11 } },
+        // { { 10, 11 } }
+        // };
 
-        int[] numWorkersRequired = { 1, 2, 1 };
+        // int[] numWorkersRequired = { 1, 2, 1 };
 
         final int numWorkers = costs.length;
         final int numTasks = costs[0].length;
@@ -89,37 +91,43 @@ public class OrToolForBookingEmployee {
 
         // DEBT
         for (int worker : allWorkers) {
-            // LinearExprBuilder debt_lst = LinearExpr.newBuilder();
+            LinearExprBuilder debt_lst = LinearExpr.newBuilder();
             for (int task : allTasks) {
-                // debt_lst.addTerm(x[worker][task], product_price[worker]);
-                model.addLessOrEqual(x[worker][task], max_debt[worker]);
+                debt_lst.addTerm(x[worker][task], costs[worker][task]);
             }
+            model.addLessOrEqual(debt_lst, max_debt[worker]);
         }
 
         // Skill constraint
-        for (int task : allTasks) {
-            for (int worker : allWorkers) {
-                for (int skill : workerSkill[worker]) {
-                    if (skillRequire[task] == skill) {
-                        IntVar skillRequirementVar = model.newConstant(skillRequire[task]);
-                        IntVar workerSkillVar = model.newConstant(skill);
-                        model.addEquality(skillRequirementVar,
-                                workerSkillVar).onlyEnforceIf(x[worker][task]);
-                    }
-                }
-            }
-        }
+        // for (int task : allTasks) {
+        // for (int worker : allWorkers) {
+        // for (int skill : workerSkill[worker]) {
+        // if (skillRequire[task] == skill) {
+        // IntVar skillRequirementVar = model.newConstant(skillRequire[task]);
+        // IntVar workerSkillVar = model.newConstant(skill);
+        // model.addEquality(skillRequirementVar,
+        // workerSkillVar).onlyEnforceIf(x[worker][task]);
+        // }
+        // }
+        // }
+        // }
         // Ensure the number of people doing each job
+        // for (int task : allTasks) {
+        // List<Literal> assignedWorkers = new ArrayList<>();
+        // for (int worker : allWorkers) {
+        // assignedWorkers.add(x[worker][task]);
+        // }
+        // Literal[] assignedWorkersArray = assignedWorkers.toArray(new Literal[0]);
+        // LinearExpr sumExpr = LinearExpr.sum(assignedWorkersArray);
+        // model.addGreaterOrEqual(sumExpr, numWorkersRequired[task]);
+        // }
         for (int task : allTasks) {
-            List<Literal> assignedWorkers = new ArrayList<>();
+            List<Literal> workers = new ArrayList<>();
             for (int worker : allWorkers) {
-                assignedWorkers.add(x[worker][task]);
+                workers.add(x[worker][task]);
             }
-            Literal[] assignedWorkersArray = assignedWorkers.toArray(new Literal[0]);
-            LinearExpr sumExpr = LinearExpr.sum(assignedWorkersArray);
-            model.addGreaterOrEqual(sumExpr, numWorkersRequired[task]);
+            model.addExactlyOne(workers);
         }
-
         // Objective
         for (int worker : allWorkers) {
             for (int task : allTasks) {
@@ -133,20 +141,26 @@ public class OrToolForBookingEmployee {
         CpSolverStatus status = solver.solve(model);
 
         // Print solution.
-        // Check that the problem has a feasible solution.
+        HashMap<Integer, List<Integer>> solution = new HashMap<Integer, List<Integer>>();
         if (status == CpSolverStatus.OPTIMAL || status == CpSolverStatus.FEASIBLE) {
             System.out.println("Total cost: " + solver.objectiveValue() + "\n");
             for (int worker : allWorkers) {
+                List<Integer> l = new ArrayList<>();
                 for (int task : allTasks) {
                     if (solver.booleanValue(x[worker][task])) {
                         System.out.println("Worker " + worker + " assigned to task " + task
-                                + ".  Cost: " + costs[worker][task] + "; start: " + times[task][0] + "; end: "
-                                + times[task][1]);
+                                + ".  Cost: " + costs[worker][task]);
+                        // + "; start: " + times[task][0] + "; end: " + times[task][1]);
+                        l.add(task);
                     }
+                }
+                if (l.size() > 0) {
+                    solution.put(worker, l);
                 }
             }
         } else {
             System.err.println("No solution found.");
         }
+        return solution;
     }
 }

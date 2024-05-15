@@ -15,7 +15,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Version;
 
-@Entity(name="EMPLOYEE_SHIFT")
+@Entity(name = "EMPLOYEE_SHIFT")
 public class EmployeeShift implements Serializable {
 
     /** Primary key. */
@@ -25,7 +25,7 @@ public class EmployeeShift implements Serializable {
      * The optimistic lock. Available via standard bean get/set operations.
      */
     @Version
-    @Column(name="LOCK_FLAG")
+    @Column(name = "LOCK_FLAG")
     private Integer lockFlag;
 
     /**
@@ -47,16 +47,16 @@ public class EmployeeShift implements Serializable {
     }
 
     @Id
-    @Column(unique=true, nullable=false, precision=10)
+    @Column(unique = true, nullable = false, precision = 10)
     private BigDecimal employeeShiftId;
     private LocalDate workingDate;
-    @Column(length=1)
+    @Column(length = 1)
     private boolean loadApply;
     @ManyToOne
-    @JoinColumn(name="employeeId")
+    @JoinColumn(name = "employeeId")
     private Employee employee;
     @ManyToOne
-    @JoinColumn(name="shiftId")
+    @JoinColumn(name = "shiftId")
     private Shift shift;
 
     /** Default constructor. */
@@ -158,10 +158,11 @@ public class EmployeeShift implements Serializable {
      * Compares the key for this instance with another EmployeeShift.
      *
      * @param other The object to compare to
-     * @return True if other object is instance of class EmployeeShift and the key objects are equal
+     * @return True if other object is instance of class EmployeeShift and the key
+     *         objects are equal
      */
     private boolean equalKeys(Object other) {
-        if (this==other) {
+        if (this == other) {
             return true;
         }
         if (!(other instanceof EmployeeShift)) {
@@ -170,7 +171,7 @@ public class EmployeeShift implements Serializable {
         EmployeeShift that = (EmployeeShift) other;
         Object myEmployeeShiftId = this.getEmployeeShiftId();
         Object yourEmployeeShiftId = that.getEmployeeShiftId();
-        if (myEmployeeShiftId==null ? yourEmployeeShiftId!=null : !myEmployeeShiftId.equals(yourEmployeeShiftId)) {
+        if (myEmployeeShiftId == null ? yourEmployeeShiftId != null : !myEmployeeShiftId.equals(yourEmployeeShiftId)) {
             return false;
         }
         return true;
@@ -184,8 +185,9 @@ public class EmployeeShift implements Serializable {
      */
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof EmployeeShift)) return false;
-        return this.equalKeys(other) && ((EmployeeShift)other).equalKeys(this);
+        if (!(other instanceof EmployeeShift))
+            return false;
+        return this.equalKeys(other) && ((EmployeeShift) other).equalKeys(this);
     }
 
     /**
@@ -202,7 +204,7 @@ public class EmployeeShift implements Serializable {
         } else {
             i = getEmployeeShiftId().hashCode();
         }
-        result = 37*result + i;
+        result = 37 * result + i;
         return result;
     }
 

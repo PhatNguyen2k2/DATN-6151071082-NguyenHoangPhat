@@ -25,6 +25,7 @@ const ListRoute = () => {
   useEffect(() => {
     getRoute();
   }, []);
+  console.log(routes);
   return (
     <Container fluid>
       <Button

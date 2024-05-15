@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Container, Table, Dropdown } from "react-bootstrap";
+import formatNumber from "accounting-js/lib/formatNumber.js";
 import axios from "axios";
 
 const ServicePrice = () => {
@@ -27,7 +28,7 @@ const ServicePrice = () => {
     setServicePrice(servicePriceData);
   };
 
-  useEffect(() => {
+  useMemo(() => {
     getVehicleType();
   }, [servicePrice]);
 
@@ -78,33 +79,53 @@ const ServicePrice = () => {
                   {p.servicePrice.vehicletype.vehiclegroup.vehicleGroupName}{" "}
                   {p.servicePrice.vehicletype.weight.toString()} kg
                 </td>
-                <td>{p.servicePrice.moq} VND</td>
-                <td>{p.servicePrice.costOfDay} VND</td>
-                <td>{p.cost} VND</td>
                 <td>
-                  {p.servicePrice.loadingFee ? p.servicePrice.loadingFee : 0}{" "}
+                  {formatNumber(p.servicePrice.moq, { precision: 0 })} VND
+                </td>
+                <td>
+                  {formatNumber(p.servicePrice.costOfDay, { precision: 0 })} VND
+                </td>
+                <td>{formatNumber(p.cost, { precision: 0 })} VND</td>
+                <td>
+                  {p.servicePrice.loadingFee
+                    ? formatNumber(p.servicePrice.loadingFee, { precision: 0 })
+                    : 0}{" "}
                   VND
                 </td>
                 <td>
-                  {p.servicePrice.holidayFee ? p.servicePrice.holidayFee : 0}{" "}
+                  {p.servicePrice.holidayFee
+                    ? formatNumber(p.servicePrice.holidayFee, { precision: 0 })
+                    : 0}{" "}
                   VND
                 </td>
                 <td>
-                  {p.servicePrice.nightFee ? p.servicePrice.nightFee : 0} VND
+                  {p.servicePrice.nightFee
+                    ? formatNumber(p.servicePrice.nightFee, { precision: 0 })
+                    : 0}{" "}
+                  VND
                 </td>
                 <td>
                   {p.servicePrice.addingStopLocationFee
-                    ? p.servicePrice.addingStopLocationFee
+                    ? formatNumber(p.servicePrice.addingStopLocationFee, {
+                        precision: 0,
+                      })
                     : 0}{" "}
                   VND
                 </td>
                 <td>
                   {p.servicePrice.waitingTimeFee
-                    ? p.servicePrice.waitingTimeFee
+                    ? formatNumber(p.servicePrice.waitingTimeFee, {
+                        precision: 0,
+                      })
                     : 0}{" "}
                   VND
                 </td>
-                <td>{p.servicePrice.tolls ? p.servicePrice.tolls : 0} VND</td>
+                <td>
+                  {p.servicePrice.tolls
+                    ? formatNumber(p.servicePrice.tolls, { precision: 0 })
+                    : 0}{" "}
+                  VND
+                </td>
                 <td>{p.shift}</td>
               </tr>
             ))

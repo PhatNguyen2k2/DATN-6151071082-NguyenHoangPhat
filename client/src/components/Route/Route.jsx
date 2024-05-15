@@ -1,4 +1,5 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
+import formatNumber from "accounting-js/lib/formatNumber.js";
 import "./Route.scss";
 const Route = (props) => {
   const [data, setData] = useState({});
@@ -18,8 +19,10 @@ const Route = (props) => {
           <div className="route-info">
             <div className="left-info">
               <div className="info-item">
-                <span className="label">Mã tuyến:</span>
-                <span className="value">{data.routeId}</span>
+                <span className="label">Tuyến:</span>
+                <span className="value">
+                  {data.routeId} - {data?.skill?.skillName}
+                </span>
               </div>
               <div className="info-item">
                 <span className="label">Thời gian bắt đầu:</span>
@@ -75,7 +78,8 @@ const Route = (props) => {
                 <span className="label">Nhà cung cấp:</span>
                 {Object.keys(plan).length > 0 ? (
                   <span className="value" style={{ color: "blueviolet" }}>
-                    {plan?.partner?.partnerName} - {plan?.costPartner} VND
+                    {plan?.partner?.partnerName} -{" "}
+                    {formatNumber(plan?.costPartner, { precision: 0 })} VND
                   </span>
                 ) : (
                   <span className="value" style={{ color: "indigo" }}>
@@ -96,6 +100,12 @@ const Route = (props) => {
                     {data.transportForm?.transportFormName}
                   </span>
                 )}
+              </div>
+              <div className="info-item">
+                <span className="label">Phí thu hộ:</span>
+                <span className="value">
+                  {formatNumber(data.cost, { precision: 0 })} VNĐ
+                </span>
               </div>
               <div className="info-item">
                 <span className="label">Loại xe:</span>

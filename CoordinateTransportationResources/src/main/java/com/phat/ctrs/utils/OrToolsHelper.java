@@ -25,6 +25,24 @@ public class OrToolsHelper {
         return costMatrix;
     }
 
+    public static int[][] buildDebtMatrix(List<Integer> routeCost, List<Integer> debt) {
+        int emp = debt.size();
+        int route = routeCost.size();
+
+        int[][] costMatrix = new int[emp][route];
+
+        int[] routeCostArray = routeCost.stream().mapToInt(Integer::intValue).toArray();
+        int[] debtArray = debt.stream().mapToInt(Integer::intValue).toArray();
+
+        for (int i = 0; i < emp; i++) {
+            int empDebt = debtArray[i];
+            for (int j = 0; j < route; j++) {
+                costMatrix[i][j] = empDebt + routeCostArray[j];
+            }
+        }
+        return costMatrix;
+    }
+
     public static int[] buildProvideAbility(List<Integer> list) {
         int[] result = new int[list.size()];
         for (int i = 0; i < list.size(); i++) {

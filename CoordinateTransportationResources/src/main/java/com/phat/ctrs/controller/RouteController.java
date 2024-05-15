@@ -52,8 +52,9 @@ public class RouteController {
 
 	@GetMapping("/choosePartner")
 	private ResponseEntity<List<TransportServicePlan>> getAllTranportServicePlan() {
-		routeService.calculateCost();
-		planService.updateCost();
+		// routeService.calculateCost();
+		// planService.updateCost();
+		routeService.calculateDebt();
 		return new ResponseEntity<List<TransportServicePlan>>(planService.getAll(),
 				HttpStatus.OK);
 	}

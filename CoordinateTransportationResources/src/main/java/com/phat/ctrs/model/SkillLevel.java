@@ -8,6 +8,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -52,6 +54,7 @@ public class SkillLevel implements Serializable {
     @Column(length=1)
     private boolean isActive;
     @OneToMany(mappedBy="skillLevel")
+    @JsonIgnore
     private Set<EmployeeSkill> employeeSkill;
 
     /** Default constructor. */

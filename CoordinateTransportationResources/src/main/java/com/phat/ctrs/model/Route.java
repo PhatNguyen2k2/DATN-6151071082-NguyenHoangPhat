@@ -58,6 +58,12 @@ public class Route implements Serializable {
     @ManyToOne(optional = false)
     @JoinColumn(name = "vehicleTypeId", nullable = false)
     private Vehicletype vehicletype;
+    private BigDecimal cost;
+
+    @ManyToOne()
+    @JoinColumn(name = "skillId")
+    private Skill skill;
+
     @Column(precision = 10)
     private BigDecimal createdUser;
     private LocalDateTime createdDate;
@@ -98,6 +104,10 @@ public class Route implements Serializable {
     /** Default constructor. */
     public Route() {
         super();
+    }
+
+    public Route(BigDecimal routeId) {
+        this.routeId = routeId;
     }
 
     /**
@@ -352,6 +362,14 @@ public class Route implements Serializable {
         realStopLocation = aRealStopLocation;
     }
 
+    public BigDecimal getCost() {
+        return cost;
+    }
+
+    public void setCost(BigDecimal cost) {
+        this.cost = cost;
+    }
+
     /**
      * Access method for address.
      *
@@ -541,6 +559,22 @@ public class Route implements Serializable {
 
     public void setLast(boolean isLast) {
         this.isLast = isLast;
+    }
+
+    public Vehicletype getVehicletype() {
+        return vehicletype;
+    }
+
+    public void setVehicletype(Vehicletype vehicletype) {
+        this.vehicletype = vehicletype;
+    }
+
+    public Skill getSkill() {
+        return skill;
+    }
+
+    public void setSkill(Skill skill) {
+        this.skill = skill;
     }
 
     /**
