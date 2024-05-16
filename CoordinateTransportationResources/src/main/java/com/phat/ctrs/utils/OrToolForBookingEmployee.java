@@ -17,31 +17,8 @@ import java.util.stream.IntStream;
 
 public class OrToolForBookingEmployee {
     public static HashMap<Integer, List<Integer>> or(int[][] costs, int[] max_debt, int[][] times,
-            int[][][] workerShift) {
+            int[][][] workerShift, int[] skillRequire, int[][] workerSkill) {
         Loader.loadNativeLibraries();
-        // Data
-        // int[][] costs = {
-        // { 120, 150, 80 },
-        // { 150, 225, 90 },
-        // { 156, 195, 104 },
-        // };
-
-        // int[] skillRequire = { 1, 2, 3 };
-        // int[][] workerSkill = {
-        // { 1, 2, 3 }, // worker 1
-        // { 1, 2, 3 }, // worker 2
-        // { 1, 2, 3 }, // worker 3
-        // };
-
-        // int[] max_debt = { 1, 1, 3 };
-
-        // int[][] times = { { 0, 10 }, { 11, 20 }, { 5, 25 } };
-        // int[][][] workerShift = {
-        // { { 0, 4 } },
-        // { { 10, 11 } },
-        // { { 10, 11 } }
-        // };
-
         // int[] numWorkersRequired = { 1, 2, 1 };
 
         final int numWorkers = costs.length;
@@ -88,7 +65,6 @@ public class OrToolForBookingEmployee {
             }
             model.addNoOverlap(lst);
         }
-
         // DEBT
         for (int worker : allWorkers) {
             LinearExprBuilder debt_lst = LinearExpr.newBuilder();
@@ -97,20 +73,26 @@ public class OrToolForBookingEmployee {
             }
             model.addLessOrEqual(debt_lst, max_debt[worker]);
         }
-
         // Skill constraint
-        // for (int task : allTasks) {
-        // for (int worker : allWorkers) {
-        // for (int skill : workerSkill[worker]) {
-        // if (skillRequire[task] == skill) {
-        // IntVar skillRequirementVar = model.newConstant(skillRequire[task]);
-        // IntVar workerSkillVar = model.newConstant(skill);
-        // model.addEquality(skillRequirementVar,
-        // workerSkillVar).onlyEnforceIf(x[worker][task]);
-        // }
-        // }
-        // }
-        // }
+        for (int task : allTasks) {
+            List<Literal> eligibleWorkers = new ArrayList<>();
+            for (int worker : allWorkers) {
+                boolean hasRequiredSkill = false;
+                for (int skill : workerSkill[worker]) {
+                    if (skillRequire[task] == skill) {
+                        hasRequiredSkill = true;
+                        break;
+                    }
+                }
+                if (hasRequiredSkill) {
+                    eligibleWorkers.add(x[worker][task]);
+                } else {
+                    model.addEquality(x[worker][task], 0);
+                }
+            }
+            model.addExactlyOne(eligibleWorkers);
+        }
+
         // Ensure the number of people doing each job
         // for (int task : allTasks) {
         // List<Literal> assignedWorkers = new ArrayList<>();

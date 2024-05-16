@@ -9,6 +9,6 @@ import org.springframework.data.jpa.repository.Query;
 import com.phat.ctrs.model.Employee;
 
 public interface IEmployeeRepository extends JpaRepository<Employee, BigDecimal> {
-    @Query(value = "SELECT * FROM employee", nativeQuery = true)
+    @Query(value = "SELECT * FROM employee order by employee_id", nativeQuery = true)
     public List<Employee> getAllEmployee();
 }

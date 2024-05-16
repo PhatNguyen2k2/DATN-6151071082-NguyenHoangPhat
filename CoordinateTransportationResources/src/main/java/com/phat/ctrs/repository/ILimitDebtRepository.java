@@ -9,6 +9,6 @@ import org.springframework.data.jpa.repository.Query;
 import com.phat.ctrs.model.LimitDebt;
 
 public interface ILimitDebtRepository extends JpaRepository<LimitDebt, BigDecimal> {
-    @Query(value = "select * from limit_debt", nativeQuery = true)
+    @Query(value = "select * from limit_debt order by employee_id", nativeQuery = true)
     public List<LimitDebt> getAllLimitDebt();
 }

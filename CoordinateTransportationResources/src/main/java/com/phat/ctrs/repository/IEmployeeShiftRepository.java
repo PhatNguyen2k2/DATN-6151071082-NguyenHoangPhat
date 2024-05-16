@@ -9,6 +9,6 @@ import org.springframework.data.jpa.repository.Query;
 import com.phat.ctrs.model.EmployeeShift;
 
 public interface IEmployeeShiftRepository extends JpaRepository<EmployeeShift, BigDecimal> {
-    @Query(value = "SELECT * FROM employee_shift", nativeQuery = true)
+    @Query(value = "SELECT * FROM employee_shift order by employee_id", nativeQuery = true)
     public List<EmployeeShift> getAllEmployeeShift();
 }

@@ -4,6 +4,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.phat.ctrs.model.EmployeeSkill;
 import com.phat.ctrs.model.Route;
 
 public class OrToolsHelper {
@@ -101,5 +102,20 @@ public class OrToolsHelper {
             }
         }
         return serveTime;
+    }
+
+    public static int[][] buildEmployeeSkill(List<List<EmployeeSkill>> employeeSkills) {
+        int emp = employeeSkills.size();
+        int[][] skills = new int[emp][];
+
+        for (int i = 0; i < emp; i++) {
+            List<EmployeeSkill> skillList = employeeSkills.get(i);
+            skills[i] = new int[skillList.size()];
+
+            for (int j = 0; j < skillList.size(); j++) {
+                skills[i][j] = skillList.get(j).getSkill().getSkillId().intValue();
+            }
+        }
+        return skills;
     }
 }

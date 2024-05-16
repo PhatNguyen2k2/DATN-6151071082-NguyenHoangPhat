@@ -9,9 +9,6 @@ import org.springframework.data.jpa.repository.Query;
 import com.phat.ctrs.model.Route;
 
 public interface IRouteRepository extends JpaRepository<Route, BigDecimal> {
-    @Query(value = "select * from Route", nativeQuery = true)
+    @Query(value = "select * from route order by route_id", nativeQuery = true)
     public List<Route> getAllRoute();
-
-    @Query(value = "select vehicle_type_id from route group by vehicle_type_id", nativeQuery = true)
-    public List<BigDecimal> getVehicleTypeIdFromRoute();
 }

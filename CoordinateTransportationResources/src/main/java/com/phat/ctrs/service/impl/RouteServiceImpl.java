@@ -3,9 +3,8 @@ package com.phat.ctrs.service.impl;
 import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -15,12 +14,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.stereotype.Service;
 
+import com.phat.ctrs.model.CurrentDebt;
 import com.phat.ctrs.model.Employee;
 import com.phat.ctrs.model.EmployeeShift;
+import com.phat.ctrs.model.EmployeeSkill;
 import com.phat.ctrs.model.Partner;
 import com.phat.ctrs.model.Route;
 import com.phat.ctrs.model.VehicleLoadType;
 import com.phat.ctrs.repository.IEmployeeShiftRepository;
+import com.phat.ctrs.repository.IEmployeeSkillRepository;
 import com.phat.ctrs.repository.IRouteRepository;
 import com.phat.ctrs.service.IEmployeeService;
 import com.phat.ctrs.service.IPartnerService;
@@ -43,6 +45,8 @@ public class RouteServiceImpl implements IRouteService {
 	IEmployeeService employeeService;
 	@Autowired
 	IEmployeeShiftRepository employeeShiftRepository;
+	@Autowired
+	IEmployeeSkillRepository employeeSkillRepository;
 
 	@Override
 	public List<Route> getAllRoute() {
@@ -57,6 +61,16 @@ public class RouteServiceImpl implements IRouteService {
 			routeMap.computeIfAbsent(vehicleTypeId, k -> new ArrayList<>()).add(route);
 		}
 		return new ArrayList<>(routeMap.values());
+	}
+
+	public List<List<EmployeeSkill>> getEmployeesSkill() {
+		List<EmployeeSkill> skills = employeeSkillRepository.getAllEmployeeSkill();
+		Map<BigDecimal, List<EmployeeSkill>> skillMap = new LinkedHashMap<>();
+		for (EmployeeSkill skill : skills) {
+			BigDecimal empId = skill.getEmployee().getEmployeeId();
+			skillMap.computeIfAbsent(empId, k -> new ArrayList<>()).add(skill);
+		}
+		return new ArrayList<>(skillMap.values());
 	}
 
 	@Override
@@ -112,12 +126,7 @@ public class RouteServiceImpl implements IRouteService {
 	@Override
 	public void calculateDebt() {
 		List<Route> routeList = this.getAllRoute();
-		// routeList.sort((o1, o2) -> o1.getRouteId().compareTo(o2.getRouteId()));
 		List<EmployeeShift> shiftList = employeeShiftRepository.getAllEmployeeShift();
-		// shiftList.sort((o1, o2) ->
-		// o1.getEmployeeShiftId().compareTo(o2.getEmployeeShiftId()));
-		List<Employee> employees = employeeService.getAllEmployee();
-		// employees.sort((o1, o2) -> o1.getEmployeeId().compareTo(o2.getEmployeeId()));
 		List<Integer> routeCost = routeList.stream()
 				.mapToInt(t -> t.getCost().intValue()).boxed()
 				.collect(Collectors.toList());
@@ -131,20 +140,25 @@ public class RouteServiceImpl implements IRouteService {
 				.map(t -> OrToolsHelper.calculateOuTimes(
 						new LocalTime[] { t.getShift().getTimeStart(), t.getShift().getTimeEnd() }))
 				.collect(Collectors.toList());
+		List<Integer> routeSkill = routeList.stream()
+				.mapToInt(t -> t.getSkill().getSkillId().intValue()).boxed()
+				.collect(Collectors.toList());
 		int[][] costs = OrToolsHelper.buildDebtMatrix(routeCost, curentDebt);
 		int[] limit = OrToolsHelper.buildProvideAbility(limitDebt);
 		int[][] times = OrToolsHelper.buildShiftOfRoute(routeList);
 		int[][][] shiftTimes = OrToolsHelper.buildServeTimeOfPartner(serveTime);
-
-		HashMap<Integer, List<Integer>> rs = OrToolForBookingEmployee.or(costs, limit, times, shiftTimes);
+		int[] skillRequire = OrToolsHelper.buildProvideAbility(routeSkill);
+		int[][] employeeSkills = OrToolsHelper.buildEmployeeSkill(getEmployeesSkill());
+		HashMap<Integer, List<Integer>> rs = OrToolForBookingEmployee.or(costs, limit, times, shiftTimes, skillRequire,
+				employeeSkills);
 		Set<Integer> keys = rs.keySet();
 		for (int key : keys) {
-			Employee emp = employees.get(key);
+			CurrentDebt emp = employeeService.getAllCurrentDebt().get(key);
 			List<Integer> routeRs = rs.get(key);
 			for (int _route : routeRs) {
 				Route r = routeList.get(_route);
 				System.out.println(
-						r.getRouteId() + " " + r.getBeginTime() + " " + r.getEndTime() + " - " + emp.getEmployeeName());
+						r.getRouteId() + " " + r.getSkill().getSkillId() + " - " + emp.getEmployee().getEmployeeId());
 			}
 		}
 	}
