@@ -99,6 +99,9 @@ public class Employee implements Serializable {
     private Set<RatingEmployeeSkill> ratingEmployeeSkill;
     @OneToMany(mappedBy = "employee")
     @JsonIgnore
+    private Set<EmployeeTransportService> employeeTransportService;
+    @OneToMany(mappedBy = "employee")
+    @JsonIgnore
     private Set<TransportServicePlan> transportServicePlan;
 
     /** Default constructor. */
@@ -428,6 +431,14 @@ public class Employee implements Serializable {
      */
     public void setRatingEmployeeSkill(Set<RatingEmployeeSkill> aRatingEmployeeSkill) {
         ratingEmployeeSkill = aRatingEmployeeSkill;
+    }
+
+    public Set<EmployeeTransportService> getEmployeeTransportService() {
+        return employeeTransportService;
+    }
+
+    public void setEmployeeTransportService(Set<EmployeeTransportService> employeeTransportService) {
+        this.employeeTransportService = employeeTransportService;
     }
 
     /**

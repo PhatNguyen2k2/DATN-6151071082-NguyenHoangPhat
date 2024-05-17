@@ -1,5 +1,6 @@
 package com.phat.ctrs.service.impl;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,9 +8,11 @@ import org.springframework.stereotype.Service;
 
 import com.phat.ctrs.model.CurrentDebt;
 import com.phat.ctrs.model.Employee;
+import com.phat.ctrs.model.EmployeeTransportService;
 import com.phat.ctrs.model.LimitDebt;
 import com.phat.ctrs.repository.ICurrentDebtRepository;
 import com.phat.ctrs.repository.IEmployeeRepository;
+import com.phat.ctrs.repository.IEmployeeTransportServiceRepository;
 import com.phat.ctrs.repository.ILimitDebtRepository;
 import com.phat.ctrs.service.IEmployeeService;
 
@@ -21,6 +24,8 @@ public class EmployeeServiceImpl implements IEmployeeService {
     ICurrentDebtRepository currentDebtRepository;
     @Autowired
     ILimitDebtRepository limitDebtRepository;
+    @Autowired
+    IEmployeeTransportServiceRepository employeeTransportServiceRepository;
 
     @Override
     public List<CurrentDebt> getAllCurrentDebt() {
@@ -37,4 +42,18 @@ public class EmployeeServiceImpl implements IEmployeeService {
         return employeeRepository.getAllEmployee();
     }
 
+    @Override
+    public void deleteEmployeeTransportService() {
+        employeeTransportServiceRepository.deleteEmployeeTransportService();
+    }
+
+    @Override
+    public void insertEmployeeTransportService(BigDecimal routeId, BigDecimal employeeId) {
+        employeeTransportServiceRepository.insertEmployeeTransportService(routeId, employeeId);
+    }
+
+    @Override
+    public List<EmployeeTransportService> getAllEmployeeTransportService() {
+        return employeeTransportServiceRepository.findAll();
+    }
 }

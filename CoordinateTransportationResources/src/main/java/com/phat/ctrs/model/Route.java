@@ -59,11 +59,11 @@ public class Route implements Serializable {
     @JoinColumn(name = "vehicleTypeId", nullable = false)
     private Vehicletype vehicletype;
     private BigDecimal cost;
-
     @ManyToOne()
     @JoinColumn(name = "skillId")
     private Skill skill;
-
+    @Column(precision = 10)
+    private BigDecimal numberRequire;
     @Column(precision = 10)
     private BigDecimal createdUser;
     private LocalDateTime createdDate;
@@ -575,6 +575,14 @@ public class Route implements Serializable {
 
     public void setSkill(Skill skill) {
         this.skill = skill;
+    }
+
+    public BigDecimal getNumberRequire() {
+        return numberRequire;
+    }
+
+    public void setNumberRequire(BigDecimal numberRequire) {
+        this.numberRequire = numberRequire;
     }
 
     /**

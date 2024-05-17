@@ -143,22 +143,25 @@ public class RouteServiceImpl implements IRouteService {
 		List<Integer> routeSkill = routeList.stream()
 				.mapToInt(t -> t.getSkill().getSkillId().intValue()).boxed()
 				.collect(Collectors.toList());
+		List<Integer> numRequire = routeList.stream()
+				.mapToInt(t -> t.getNumberRequire().intValue()).boxed()
+				.collect(Collectors.toList());
 		int[][] costs = OrToolsHelper.buildDebtMatrix(routeCost, curentDebt);
 		int[] limit = OrToolsHelper.buildProvideAbility(limitDebt);
 		int[][] times = OrToolsHelper.buildShiftOfRoute(routeList);
 		int[][][] shiftTimes = OrToolsHelper.buildServeTimeOfPartner(serveTime);
 		int[] skillRequire = OrToolsHelper.buildProvideAbility(routeSkill);
 		int[][] employeeSkills = OrToolsHelper.buildEmployeeSkill(getEmployeesSkill());
+		int[] numOfWorkerRequire = OrToolsHelper.buildProvideAbility(numRequire);
 		HashMap<Integer, List<Integer>> rs = OrToolForBookingEmployee.or(costs, limit, times, shiftTimes, skillRequire,
-				employeeSkills);
+				employeeSkills, numOfWorkerRequire);
 		Set<Integer> keys = rs.keySet();
 		for (int key : keys) {
 			CurrentDebt emp = employeeService.getAllCurrentDebt().get(key);
 			List<Integer> routeRs = rs.get(key);
 			for (int _route : routeRs) {
 				Route r = routeList.get(_route);
-				System.out.println(
-						r.getRouteId() + " " + r.getSkill().getSkillId() + " - " + emp.getEmployee().getEmployeeId());
+				planService.updateEmployeeForRoute(emp.getEmployee().getEmployeeId(), r.getRouteId());
 			}
 		}
 	}

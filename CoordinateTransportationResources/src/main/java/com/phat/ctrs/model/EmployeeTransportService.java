@@ -4,18 +4,21 @@ package com.phat.ctrs.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Version;
 
-@Entity(name="EMPLOYEE_TRANSPORT_SERVICE")
+@Entity(name = "EMPLOYEE_TRANSPORT_SERVICE")
 public class EmployeeTransportService implements Serializable {
 
     /** Primary key. */
@@ -25,7 +28,7 @@ public class EmployeeTransportService implements Serializable {
      * The optimistic lock. Available via standard bean get/set operations.
      */
     @Version
-    @Column(name="LOCK_FLAG")
+    @Column(name = "LOCK_FLAG")
     private Integer lockFlag;
 
     /**
@@ -47,25 +50,26 @@ public class EmployeeTransportService implements Serializable {
     }
 
     @Id
-    @Column(unique=true, nullable=false, precision=10)
-    private BigDecimal employeeTransportServiceId;
-    @Column(name="EmployeeId", precision=10)
-    private BigDecimal employeeId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer employeeTransportServiceId;
+    @ManyToOne
+    @JoinColumn(name = "EmployeeId")
+    private Employee employee;
     private String position;
-    @Column(precision=10)
+    @Column(precision = 10)
     private BigDecimal createdUser;
     private LocalDateTime createdDate;
-    @Column(precision=10)
+    @Column(precision = 10)
     private BigDecimal updatedUser;
     private LocalDateTime updatedDate;
-    @Column(precision=10)
+    @Column(precision = 10)
     private BigDecimal deletedUser;
     private LocalDateTime deletedDate;
     private String updateNote;
-    @Column(length=1)
+    @Column(length = 1)
     private boolean isLast;
-    @ManyToOne(optional=false)
-    @JoinColumn(name="transportServicePlanId", nullable=false)
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "transportServicePlanId", nullable = false)
     private TransportServicePlan transportServicePlan;
 
     /** Default constructor. */
@@ -78,16 +82,17 @@ public class EmployeeTransportService implements Serializable {
      *
      * @return the current value of employeeTransportServiceId
      */
-    public BigDecimal getEmployeeTransportServiceId() {
+    public Integer getEmployeeTransportServiceId() {
         return employeeTransportServiceId;
     }
 
     /**
      * Setter method for employeeTransportServiceId.
      *
-     * @param aEmployeeTransportServiceId the new value for employeeTransportServiceId
+     * @param aEmployeeTransportServiceId the new value for
+     *                                    employeeTransportServiceId
      */
-    public void setEmployeeTransportServiceId(BigDecimal aEmployeeTransportServiceId) {
+    public void setEmployeeTransportServiceId(Integer aEmployeeTransportServiceId) {
         employeeTransportServiceId = aEmployeeTransportServiceId;
     }
 
@@ -96,17 +101,12 @@ public class EmployeeTransportService implements Serializable {
      *
      * @return the current value of employeeId
      */
-    public BigDecimal getEmployeeId() {
-        return employeeId;
+    public Employee getEmployee() {
+        return employee;
     }
 
-    /**
-     * Setter method for employeeId.
-     *
-     * @param aEmployeeId the new value for employeeId
-     */
-    public void setEmployeeId(BigDecimal aEmployeeId) {
-        employeeId = aEmployeeId;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
     /**
@@ -293,10 +293,11 @@ public class EmployeeTransportService implements Serializable {
      * Compares the key for this instance with another EmployeeTransportService.
      *
      * @param other The object to compare to
-     * @return True if other object is instance of class EmployeeTransportService and the key objects are equal
+     * @return True if other object is instance of class EmployeeTransportService
+     *         and the key objects are equal
      */
     private boolean equalKeys(Object other) {
-        if (this==other) {
+        if (this == other) {
             return true;
         }
         if (!(other instanceof EmployeeTransportService)) {
@@ -305,7 +306,8 @@ public class EmployeeTransportService implements Serializable {
         EmployeeTransportService that = (EmployeeTransportService) other;
         Object myEmployeeTransportServiceId = this.getEmployeeTransportServiceId();
         Object yourEmployeeTransportServiceId = that.getEmployeeTransportServiceId();
-        if (myEmployeeTransportServiceId==null ? yourEmployeeTransportServiceId!=null : !myEmployeeTransportServiceId.equals(yourEmployeeTransportServiceId)) {
+        if (myEmployeeTransportServiceId == null ? yourEmployeeTransportServiceId != null
+                : !myEmployeeTransportServiceId.equals(yourEmployeeTransportServiceId)) {
             return false;
         }
         return true;
@@ -319,8 +321,9 @@ public class EmployeeTransportService implements Serializable {
      */
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof EmployeeTransportService)) return false;
-        return this.equalKeys(other) && ((EmployeeTransportService)other).equalKeys(this);
+        if (!(other instanceof EmployeeTransportService))
+            return false;
+        return this.equalKeys(other) && ((EmployeeTransportService) other).equalKeys(this);
     }
 
     /**
@@ -337,7 +340,7 @@ public class EmployeeTransportService implements Serializable {
         } else {
             i = getEmployeeTransportServiceId().hashCode();
         }
-        result = 37*result + i;
+        result = 37 * result + i;
         return result;
     }
 

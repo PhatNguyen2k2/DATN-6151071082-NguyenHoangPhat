@@ -10,12 +10,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.phat.ctrs.model.TransportServicePlan;
 import com.phat.ctrs.model.Route;
 import com.phat.ctrs.model.Shift;
 import com.phat.ctrs.model.TransportServicePlan;
 import com.phat.ctrs.model.Vehicletype;
+import com.phat.ctrs.repository.IEmployeeTransportServiceRepository;
 import com.phat.ctrs.repository.IShiftRespository;
 import com.phat.ctrs.repository.IVehicleTypeRepository;
+import com.phat.ctrs.service.IEmployeeService;
 import com.phat.ctrs.service.IPartnerService;
 import com.phat.ctrs.service.IRouteService;
 import com.phat.ctrs.service.ITransportServicePlanService;
@@ -34,6 +37,8 @@ public class RouteController {
 	IVehicleTypeRepository typeRepository;
 	@Autowired
 	IShiftRespository shiftRespository;
+	@Autowired
+	IEmployeeService employeeService;
 
 	@GetMapping("")
 	private ResponseEntity<List<Route>> getAllRoute() {
@@ -52,8 +57,14 @@ public class RouteController {
 
 	@GetMapping("/choosePartner")
 	private ResponseEntity<List<TransportServicePlan>> getAllTranportServicePlan() {
-		// routeService.calculateCost();
-		// planService.updateCost();
+		routeService.calculateCost();
+		planService.updateCost();
+		return new ResponseEntity<List<TransportServicePlan>>(planService.getAll(),
+				HttpStatus.OK);
+	}
+
+	@GetMapping("/chooseEmployee")
+	private ResponseEntity<List<TransportServicePlan>> getAllEmployeeTransportService() {
 		routeService.calculateDebt();
 		return new ResponseEntity<List<TransportServicePlan>>(planService.getAll(),
 				HttpStatus.OK);

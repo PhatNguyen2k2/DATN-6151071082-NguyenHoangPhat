@@ -44,4 +44,9 @@ public class TransportServicePlanServiceImpl implements ITransportServicePlanSer
             this.updateCostForRoute(cost, t.getRoute().getRouteId());
         });
     }
+
+    @Override
+    public int updateEmployeeForRoute(BigDecimal employeeId, BigDecimal routeId) {
+        return planRepository.updateEmployeeForRoute(employeeId, routeId);
+    }
 }

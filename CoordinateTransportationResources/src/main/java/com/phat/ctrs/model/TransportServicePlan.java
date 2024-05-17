@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -391,14 +392,6 @@ public class TransportServicePlan implements Serializable {
         this.isLast = isLast;
     }
 
-    public Employee getEmployee() {
-        return employee;
-    }
-
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
-
     public Partner getPartner() {
         return partner;
     }
@@ -413,6 +406,14 @@ public class TransportServicePlan implements Serializable {
 
     public void setCostPartner(BigDecimal costPartner) {
         this.costPartner = costPartner;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
 }

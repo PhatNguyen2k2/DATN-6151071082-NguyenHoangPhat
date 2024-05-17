@@ -17,9 +17,8 @@ import java.util.stream.IntStream;
 
 public class OrToolForBookingEmployee {
     public static HashMap<Integer, List<Integer>> or(int[][] costs, int[] max_debt, int[][] times,
-            int[][][] workerShift, int[] skillRequire, int[][] workerSkill) {
+            int[][][] workerShift, int[] skillRequire, int[][] workerSkill, int[] numWorkersRequired) {
         Loader.loadNativeLibraries();
-        // int[] numWorkersRequired = { 1, 2, 1 };
 
         final int numWorkers = costs.length;
         final int numTasks = costs[0].length;
@@ -65,14 +64,6 @@ public class OrToolForBookingEmployee {
             }
             model.addNoOverlap(lst);
         }
-        // DEBT
-        for (int worker : allWorkers) {
-            LinearExprBuilder debt_lst = LinearExpr.newBuilder();
-            for (int task : allTasks) {
-                debt_lst.addTerm(x[worker][task], costs[worker][task]);
-            }
-            model.addLessOrEqual(debt_lst, max_debt[worker]);
-        }
         // Skill constraint
         for (int task : allTasks) {
             List<Literal> eligibleWorkers = new ArrayList<>();
@@ -92,24 +83,24 @@ public class OrToolForBookingEmployee {
             }
             model.addExactlyOne(eligibleWorkers);
         }
-
-        // Ensure the number of people doing each job
-        // for (int task : allTasks) {
-        // List<Literal> assignedWorkers = new ArrayList<>();
-        // for (int worker : allWorkers) {
-        // assignedWorkers.add(x[worker][task]);
-        // }
-        // Literal[] assignedWorkersArray = assignedWorkers.toArray(new Literal[0]);
-        // LinearExpr sumExpr = LinearExpr.sum(assignedWorkersArray);
-        // model.addGreaterOrEqual(sumExpr, numWorkersRequired[task]);
-        // }
-        for (int task : allTasks) {
-            List<Literal> workers = new ArrayList<>();
-            for (int worker : allWorkers) {
-                workers.add(x[worker][task]);
+        // DEBT
+        for (int worker : allWorkers) {
+            LinearExprBuilder debt_lst = LinearExpr.newBuilder();
+            for (int task : allTasks) {
+                debt_lst.addTerm(x[worker][task], costs[worker][task]);
             }
-            model.addExactlyOne(workers);
+            model.addLessOrEqual(debt_lst, max_debt[worker]);
         }
+        // Number of workers require
+        for (int task : allTasks) {
+            List<Literal> assignedWorkers = new ArrayList<>();
+            for (int worker : allWorkers) {
+                assignedWorkers.add(x[worker][task]);
+            }
+            LinearExpr sumExpr = LinearExpr.sum(assignedWorkers.toArray(new Literal[0]));
+            model.addLessOrEqual(sumExpr, numWorkersRequired[task]);
+        }
+
         // Objective
         for (int worker : allWorkers) {
             for (int task : allTasks) {
@@ -132,7 +123,6 @@ public class OrToolForBookingEmployee {
                     if (solver.booleanValue(x[worker][task])) {
                         System.out.println("Worker " + worker + " assigned to task " + task
                                 + ".  Cost: " + costs[worker][task]);
-                        // + "; start: " + times[task][0] + "; end: " + times[task][1]);
                         l.add(task);
                     }
                 }

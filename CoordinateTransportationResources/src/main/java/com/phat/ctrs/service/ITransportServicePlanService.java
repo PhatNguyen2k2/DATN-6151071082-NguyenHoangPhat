@@ -12,5 +12,7 @@ public interface ITransportServicePlanService {
 
 	public int updateCostForRoute(BigDecimal costPartner, BigDecimal routeId);
 
+	public int updateEmployeeForRoute(BigDecimal employeeId, BigDecimal routeId);
+
 	public void updateCost();
 }
