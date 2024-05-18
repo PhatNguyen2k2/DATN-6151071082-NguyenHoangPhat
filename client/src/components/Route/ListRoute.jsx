@@ -71,7 +71,7 @@ const ListRoute = () => {
         onClick={() => resetPlan()}
         variant="secondary"
       >
-        Reset
+        Làm mới
       </Button>
       {routes.length > 0 && (
         <>

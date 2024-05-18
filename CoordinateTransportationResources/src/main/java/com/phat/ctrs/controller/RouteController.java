@@ -9,12 +9,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.phat.ctrs.model.TransportServicePlan;
 import com.phat.ctrs.model.Vehicle;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.phat.ctrs.model.Route;
 import com.phat.ctrs.model.Shift;
 import com.phat.ctrs.model.Vehicletype;
@@ -93,6 +97,15 @@ public class RouteController {
 
 	@GetMapping("/internalServicePlan")
 	private ResponseEntity<List<TransportServicePlan>> getInternalServicePlan() {
+		return new ResponseEntity<List<TransportServicePlan>>(planService.getInternalServicePlan(),
+				HttpStatus.OK);
+	}
+
+	@PostMapping("/updateVehicle")
+	@ResponseBody
+	private ResponseEntity<List<TransportServicePlan>> updateVehicleOfRoute(@RequestBody ObjectNode json) {
+		planService.updateVehicleForRoute(json.get("vehicleInfo").asText(),
+				BigDecimal.valueOf(Integer.parseInt(json.get("planId").asText())));
 		return new ResponseEntity<List<TransportServicePlan>>(planService.getInternalServicePlan(),
 				HttpStatus.OK);
 	}

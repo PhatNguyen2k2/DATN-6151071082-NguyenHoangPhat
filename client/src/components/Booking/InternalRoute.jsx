@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import formatNumber from "accounting-js/lib/formatNumber.js";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/esm/Button";
@@ -14,8 +14,20 @@ const InternalRoute = (props) => {
     );
     setVehicle(vehicles.data);
   };
-  const updateVehicle = async (item) => {
-    console.log(item);
+  const updateVehicle = (item) => {
+    props.transportServicePlan(data.transportServicePlanId);
+    let v = vehicle.find((e) => e.vehicleId.toString() === item);
+    props.vehicleInfo(
+      v.vehicleName +
+        " - " +
+        v.licensePlates +
+        " (" +
+        v.employee.employeeId +
+        " - " +
+        v.employee.employeeName +
+        ")"
+    );
+    window.location.reload();
   };
   useEffect(() => {
     if (props.plans) {
@@ -119,7 +131,7 @@ const InternalRoute = (props) => {
                 <span className="label">Loại hình vận chuyển:</span>
                 {data?.route?.transportForm?.transportFormId === 1 ? (
                   <span className="value" style={{ color: "green" }}>
-                    {data.transportForm?.transportFormName}
+                    {data?.route?.transportForm?.transportFormName}
                   </span>
                 ) : (
                   <span className="value" style={{ color: "red" }}>

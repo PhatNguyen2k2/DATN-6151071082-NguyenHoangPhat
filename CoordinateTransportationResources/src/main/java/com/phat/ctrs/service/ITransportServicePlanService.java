@@ -14,6 +14,8 @@ public interface ITransportServicePlanService {
 
 	public int updateEmployeeForRoute(BigDecimal employeeId, BigDecimal routeId);
 
+	public int updateVehicleForRoute(String vehicleInfo, BigDecimal transportServicePlanId);
+
 	public void updateCost();
 
 	public List<TransportServicePlan> getInternalServicePlan();

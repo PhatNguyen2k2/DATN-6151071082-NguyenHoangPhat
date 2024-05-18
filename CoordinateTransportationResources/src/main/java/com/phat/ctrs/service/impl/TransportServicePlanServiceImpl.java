@@ -59,4 +59,9 @@ public class TransportServicePlanServiceImpl implements ITransportServicePlanSer
     public void resetPlan() {
         planRepository.resetPlan();
     }
+
+    @Override
+    public int updateVehicleForRoute(String vehicleInfo, BigDecimal transportServicePlanId) {
+        return planRepository.updateVehicleForRoute(vehicleInfo, transportServicePlanId);
+    }
 }

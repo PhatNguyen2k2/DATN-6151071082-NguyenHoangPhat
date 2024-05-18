@@ -87,6 +87,18 @@ const Route = (props) => {
                   </span>
                 )}
               </div>
+              <div className="info-item">
+                <span className="label">Thông tin xe:</span>
+                {plan.vehicleInfo ? (
+                  <span className="value" style={{ color: "deeppink" }}>
+                    {plan?.vehicleInfo}
+                  </span>
+                ) : (
+                  <span className="value" style={{ color: "fuchsia" }}>
+                    Chưa có xe
+                  </span>
+                )}
+              </div>
             </div>
             <div className="right-info">
               <div className="info-item">
