@@ -22,6 +22,15 @@ const ListRoute = () => {
     });
     setPlans(plan.data);
   };
+  const getEmployee = async () => {
+    const employees = await axios.get(
+      "http://localhost:8080/api/route/chooseEmployee"
+    );
+    employees.data = employees.data.sort(function (a, b) {
+      return a.route.routeId - b.route.routeId;
+    });
+    setPlans(employees.data);
+  };
   useEffect(() => {
     getRoute();
   }, []);
@@ -29,11 +38,18 @@ const ListRoute = () => {
   return (
     <Container fluid>
       <Button
-        style={{ margin: "5px 0px 10px" }}
+        style={{ margin: "5px 20px 10px 0px" }}
         onClick={() => getPlan()}
         variant="info"
       >
         Tìm nhà cung cấp
+      </Button>
+      <Button
+        style={{ margin: "5px 0px 10px" }}
+        onClick={() => getEmployee()}
+        variant="success"
+      >
+        Tìm nhân viên
       </Button>
       {routes.length > 0 && (
         <>

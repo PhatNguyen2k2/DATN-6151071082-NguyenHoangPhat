@@ -15,6 +15,8 @@ const ViewVehicleResource = React.lazy(() =>
 const ViewServicePrice = React.lazy(() => import("./pages/ViewServicePrice"));
 const ViewVehicleType = React.lazy(() => import("./pages/ViewVehicleType"));
 const ViewShift = React.lazy(() => import("./pages/ViewShift"));
+const ViewEmployee = React.lazy(() => import("./pages/ViewEmployee"));
+const ViewDebt = React.lazy(() => import("./pages/ViewDebt"));
 function App() {
   return (
     <>
@@ -33,6 +35,8 @@ function App() {
           <Route path="declare/servicePrice" element={<ViewServicePrice />} />
           <Route path="declare/vehicleType" element={<ViewVehicleType />} />
           <Route path="declare/shift" element={<ViewShift />} />
+          <Route path="declare/employee" element={<ViewEmployee />} />
+          <Route path="declare/employeeDebt" element={<ViewDebt />} />
         </Routes>
       </Suspense>
     </>

@@ -128,6 +128,21 @@ const Route = (props) => {
                   Thể tích: {data.vehicleType?.volume} &#13221;
                 </span>
               </div>
+              <div className="info-item">
+                <span className="label">Nhân viên:</span>
+                <span className="value">
+                  {Object.keys(plan).length > 0 ? (
+                    <span className="value" style={{ color: "blueviolet" }}>
+                      {plan?.employee?.employeeId} -{" "}
+                      {plan?.employee?.employeeName}
+                    </span>
+                  ) : (
+                    <span className="value" style={{ color: "indigo" }}>
+                      Chưa có nhân viên
+                    </span>
+                  )}
+                </span>
+              </div>
             </div>
           </div>
         </>

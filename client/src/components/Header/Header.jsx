@@ -81,6 +81,14 @@ const Header = () => {
                 <NavDropdown.Item onClick={() => navigate("/declare/shift")}>
                   Ca làm việc
                 </NavDropdown.Item>
+                <NavDropdown.Item onClick={() => navigate("/declare/employee")}>
+                  Nhân viên
+                </NavDropdown.Item>
+                <NavDropdown.Item
+                  onClick={() => navigate("/declare/employeeDebt")}
+                >
+                  Công nợ nhân viên
+                </NavDropdown.Item>
               </NavDropdown>
               <Nav.Link onClick={() => navigate("/booking")}>Booking</Nav.Link>
             </Nav>

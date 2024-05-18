@@ -15,7 +15,6 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.stereotype.Service;
 
 import com.phat.ctrs.model.CurrentDebt;
-import com.phat.ctrs.model.Employee;
 import com.phat.ctrs.model.EmployeeShift;
 import com.phat.ctrs.model.EmployeeSkill;
 import com.phat.ctrs.model.Partner;

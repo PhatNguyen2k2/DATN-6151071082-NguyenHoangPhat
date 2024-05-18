@@ -13,7 +13,6 @@ const VehicleType = () => {
   useEffect(() => {
     getVehicleType();
   }, []);
-  console.log(vehicleType);
   return (
     <Container fluid>
       <div style={{ textAlign: "center" }}>

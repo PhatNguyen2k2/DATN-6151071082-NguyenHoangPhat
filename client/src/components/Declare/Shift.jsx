@@ -11,7 +11,6 @@ const Shift = () => {
   useEffect(() => {
     getShift();
   }, []);
-  console.log(shift);
   return (
     <Container fluid>
       <div style={{ textAlign: "center" }}>

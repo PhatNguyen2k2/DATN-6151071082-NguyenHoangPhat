@@ -13,7 +13,6 @@ const VehicleResource = () => {
   useEffect(() => {
     getVehicleResource();
   }, []);
-  console.log(vehicleResource);
   return (
     <Container fluid>
       <div style={{ textAlign: "center" }}>
