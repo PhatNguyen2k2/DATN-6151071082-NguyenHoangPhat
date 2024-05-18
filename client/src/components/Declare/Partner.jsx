@@ -24,7 +24,6 @@ const Partner = () => {
     getPartner();
     partnerType("type1");
   }, []);
-  console.log(filterPartner);
   return (
     <Container fluid>
       <div style={{ textAlign: "center" }}>

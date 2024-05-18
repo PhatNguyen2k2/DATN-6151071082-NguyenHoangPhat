@@ -14,13 +14,21 @@ const ListRoute = () => {
     setRoutes(route.data);
   };
   const getPlan = async () => {
-    const plan = await axios.get(
-      "http://localhost:8080/api/route/choosePartner"
-    );
+    const plan = await axios.get("http://localhost:8080/api/route/servicePlan");
     plan.data = plan.data.sort(function (a, b) {
       return a.route.routeId - b.route.routeId;
     });
     setPlans(plan.data);
+  };
+
+  const getPartner = async () => {
+    const partner = await axios.get(
+      "http://localhost:8080/api/route/choosePartner"
+    );
+    partner.data = partner.data.sort(function (a, b) {
+      return a.route.routeId - b.route.routeId;
+    });
+    setPlans(partner.data);
   };
   const getEmployee = async () => {
     const employees = await axios.get(
@@ -33,13 +41,13 @@ const ListRoute = () => {
   };
   useEffect(() => {
     getRoute();
+    getPlan();
   }, []);
-  console.log(routes);
   return (
     <Container fluid>
       <Button
         style={{ margin: "5px 20px 10px 0px" }}
-        onClick={() => getPlan()}
+        onClick={() => getPartner()}
         variant="info"
       >
         Tìm nhà cung cấp

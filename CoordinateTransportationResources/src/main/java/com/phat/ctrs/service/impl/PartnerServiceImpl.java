@@ -8,10 +8,12 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.stereotype.Service;
 
 import com.phat.ctrs.model.Partner;
+import com.phat.ctrs.model.Vehicle;
 import com.phat.ctrs.model.VehicleLoadType;
 import com.phat.ctrs.repository.IPartnerRepository;
 import com.phat.ctrs.repository.ITransportResourceRepository;
 import com.phat.ctrs.repository.IVehicleLoadTypeRepository;
+import com.phat.ctrs.repository.IVehicleRepository;
 import com.phat.ctrs.service.IPartnerService;
 
 @Service
@@ -24,6 +26,8 @@ public class PartnerServiceImpl implements IPartnerService {
     IVehicleLoadTypeRepository vehicleLoadTypeRepository;
     @Autowired
     ITransportResourceRepository transportResourceRepository;
+    @Autowired
+    IVehicleRepository vehicleRepository;
 
     @Override
     public List<Partner> getPartnersByVehicleType(BigDecimal vehicleType) {
@@ -48,6 +52,11 @@ public class PartnerServiceImpl implements IPartnerService {
     @Override
     public BigDecimal getcostOfPartner(BigDecimal partnerId, BigDecimal routeId) {
         return partnerRepository.getcostOfPartner(partnerId, routeId);
+    }
+
+    @Override
+    public List<Vehicle> getVehicleByVehicleType(BigDecimal vehicleTypeId) {
+        return vehicleRepository.getVehicleByVehicleType(vehicleTypeId);
     }
 
 }

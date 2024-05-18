@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import com.phat.ctrs.model.Partner;
+import com.phat.ctrs.model.Vehicle;
 import com.phat.ctrs.model.VehicleLoadType;
 
 public interface IPartnerService {
@@ -16,4 +17,6 @@ public interface IPartnerService {
     public BigDecimal getResourceOfPartner(BigDecimal partnerId, BigDecimal vehicleTypeId);
 
     public BigDecimal getcostOfPartner(BigDecimal partnerId, BigDecimal routeId);
+
+    public List<Vehicle> getVehicleByVehicleType(BigDecimal vehicleTypeId);
 }

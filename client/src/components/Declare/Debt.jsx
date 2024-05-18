@@ -21,7 +21,6 @@ const Debt = () => {
       })
     );
   };
-  console.log(employee);
   useEffect(() => {
     getDebt();
   }, []);

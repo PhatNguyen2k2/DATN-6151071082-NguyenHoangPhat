@@ -103,6 +103,9 @@ public class Employee implements Serializable {
     @OneToMany(mappedBy = "employee")
     @JsonIgnore
     private Set<TransportServicePlan> transportServicePlan;
+    @OneToMany(mappedBy = "employee")
+    @JsonIgnore
+    private Set<Vehicle> vehicle;
 
     /** Default constructor. */
     public Employee() {
@@ -533,6 +536,14 @@ public class Employee implements Serializable {
 
     public void setTransportServicePlan(Set<TransportServicePlan> transportServicePlan) {
         this.transportServicePlan = transportServicePlan;
+    }
+
+    public Set<Vehicle> getVehicle() {
+        return vehicle;
+    }
+
+    public void setVehicle(Set<Vehicle> vehicle) {
+        this.vehicle = vehicle;
     }
 
 }

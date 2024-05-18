@@ -85,9 +85,6 @@ public class Partner implements Serializable {
     private Set<VehicleLoadType> vehicleLoadType;
     @OneToMany(mappedBy = "partner")
     @JsonIgnore
-    private Set<Vehicle> vehicle;
-    @OneToMany(mappedBy = "partner")
-    @JsonIgnore
     private Set<TransportServicePlan> transportServicesPlans;
 
     /** Default constructor. */
@@ -310,24 +307,6 @@ public class Partner implements Serializable {
      */
     public void setVehicleLoadType(Set<VehicleLoadType> aVehicleLoadType) {
         vehicleLoadType = aVehicleLoadType;
-    }
-
-    /**
-     * Access method for vehicle.
-     *
-     * @return the current value of vehicle
-     */
-    public Set<Vehicle> getVehicle() {
-        return vehicle;
-    }
-
-    /**
-     * Setter method for vehicle.
-     *
-     * @param aVehicle the new value for vehicle
-     */
-    public void setVehicle(Set<Vehicle> aVehicle) {
-        vehicle = aVehicle;
     }
 
     /**

@@ -76,7 +76,7 @@ const Route = (props) => {
               </div>
               <div className="info-item">
                 <span className="label">Nhà cung cấp:</span>
-                {Object.keys(plan).length > 0 ? (
+                {plan.partner ? (
                   <span className="value" style={{ color: "blueviolet" }}>
                     {plan?.partner?.partnerName} -{" "}
                     {formatNumber(plan?.costPartner, { precision: 0 })} VND
@@ -103,7 +103,7 @@ const Route = (props) => {
               </div>
               <div className="info-item">
                 <span className="label">Phí thu hộ:</span>
-                <span className="value">
+                <span className="value" style={{ color: "coral" }}>
                   {formatNumber(data.cost, { precision: 0 })} VNĐ
                 </span>
               </div>
@@ -131,7 +131,7 @@ const Route = (props) => {
               <div className="info-item">
                 <span className="label">Nhân viên:</span>
                 <span className="value">
-                  {Object.keys(plan).length > 0 ? (
+                  {plan.employee ? (
                     <span className="value" style={{ color: "blueviolet" }}>
                       {plan?.employee?.employeeId} -{" "}
                       {plan?.employee?.employeeName}

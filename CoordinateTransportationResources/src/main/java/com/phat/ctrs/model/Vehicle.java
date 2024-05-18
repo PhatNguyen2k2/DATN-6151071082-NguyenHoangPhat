@@ -58,8 +58,8 @@ public class Vehicle implements Serializable {
     @JsonIgnore
     private Set<VehicleLoadInDay> vehicleLoadInDay;
     @ManyToOne
-    @JoinColumn(name = "partnerId")
-    private Partner partner;
+    @JoinColumn(name = "employeeId")
+    private Employee employee;
     @ManyToOne(optional = false)
     @JoinColumn(name = "vehicleTypeId", nullable = false)
     private Vehicletype vehicletype;
@@ -139,24 +139,6 @@ public class Vehicle implements Serializable {
      */
     public void setVehicleLoadInDay(Set<VehicleLoadInDay> aVehicleLoadInDay) {
         vehicleLoadInDay = aVehicleLoadInDay;
-    }
-
-    /**
-     * Access method for partner.
-     *
-     * @return the current value of partner
-     */
-    public Partner getPartner() {
-        return partner;
-    }
-
-    /**
-     * Setter method for partner.
-     *
-     * @param aPartner the new value for partner
-     */
-    public void setPartner(Partner aPartner) {
-        partner = aPartner;
     }
 
     /**
@@ -253,6 +235,18 @@ public class Vehicle implements Serializable {
         Map<String, Object> ret = new LinkedHashMap<String, Object>(6);
         ret.put("vehicleId", getVehicleId());
         return ret;
+    }
+
+    public static String getPk() {
+        return PK;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
 }
