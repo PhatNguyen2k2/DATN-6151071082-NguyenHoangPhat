@@ -61,6 +61,7 @@ public class TransportServicePlan implements Serializable {
     private Partner partner;
     @Column(precision = 10, scale = 2)
     private BigDecimal costPartner;
+    private String vehicleInfo;
     @Column(precision = 10)
     private BigDecimal createdUser;
     private LocalDateTime createdDate;
@@ -415,4 +416,11 @@ public class TransportServicePlan implements Serializable {
         this.employee = employee;
     }
 
+    public String getVehicleInfo() {
+        return vehicleInfo;
+    }
+
+    public void setVehicleInfo(String vehicleInfo) {
+        this.vehicleInfo = vehicleInfo;
+    }
 }

@@ -39,6 +39,13 @@ const ListRoute = () => {
     });
     setPlans(employees.data);
   };
+  const resetPlan = async () => {
+    const plan = await axios.get("http://localhost:8080/api/route/resetPlan");
+    plan.data = plan.data.sort(function (a, b) {
+      return a.route.routeId - b.route.routeId;
+    });
+    setPlans(plan.data);
+  };
   useEffect(() => {
     getRoute();
     getPlan();
@@ -58,6 +65,13 @@ const ListRoute = () => {
         variant="success"
       >
         Tìm nhân viên
+      </Button>
+      <Button
+        style={{ margin: "5px 0px 10px", float: "right" }}
+        onClick={() => resetPlan()}
+        variant="secondary"
+      >
+        Reset
       </Button>
       {routes.length > 0 && (
         <>

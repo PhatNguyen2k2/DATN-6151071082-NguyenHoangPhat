@@ -19,7 +19,6 @@ import com.phat.ctrs.model.Route;
 import com.phat.ctrs.model.Shift;
 import com.phat.ctrs.model.Vehicletype;
 import com.phat.ctrs.repository.IShiftRespository;
-import com.phat.ctrs.repository.IVehicleRepository;
 import com.phat.ctrs.repository.IVehicleTypeRepository;
 import com.phat.ctrs.service.IEmployeeService;
 import com.phat.ctrs.service.IPartnerService;
@@ -70,6 +69,13 @@ public class RouteController {
 				HttpStatus.OK);
 	}
 
+	@GetMapping("/resetPlan")
+	private ResponseEntity<List<TransportServicePlan>> resetPlan() {
+		planService.resetPlan();
+		return new ResponseEntity<List<TransportServicePlan>>(planService.getAll(),
+				HttpStatus.OK);
+	}
+
 	@GetMapping("/choosePartner")
 	private ResponseEntity<List<TransportServicePlan>> getAllPartnerServicePlan() {
 		routeService.calculateCost();
@@ -82,6 +88,12 @@ public class RouteController {
 	private ResponseEntity<List<TransportServicePlan>> getAllEmployeeTransportService() {
 		routeService.calculateDebt();
 		return new ResponseEntity<List<TransportServicePlan>>(planService.getAll(),
+				HttpStatus.OK);
+	}
+
+	@GetMapping("/internalServicePlan")
+	private ResponseEntity<List<TransportServicePlan>> getInternalServicePlan() {
+		return new ResponseEntity<List<TransportServicePlan>>(planService.getInternalServicePlan(),
 				HttpStatus.OK);
 	}
 }

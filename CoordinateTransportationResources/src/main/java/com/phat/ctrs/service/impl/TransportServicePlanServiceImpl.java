@@ -49,4 +49,14 @@ public class TransportServicePlanServiceImpl implements ITransportServicePlanSer
     public int updateEmployeeForRoute(BigDecimal employeeId, BigDecimal routeId) {
         return planRepository.updateEmployeeForRoute(employeeId, routeId);
     }
+
+    @Override
+    public List<TransportServicePlan> getInternalServicePlan() {
+        return planRepository.getInternalServicePlan();
+    }
+
+    @Override
+    public void resetPlan() {
+        planRepository.resetPlan();
+    }
 }
