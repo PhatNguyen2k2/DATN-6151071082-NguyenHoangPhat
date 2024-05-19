@@ -55,7 +55,7 @@ const ListInternalRoute = () => {
         </>
       ) : (
         <Alert key="info" variant="info">
-          Hãy điều phối trước.
+          Hãy điều phối tuyến trước.
         </Alert>
       )}
     </Container>

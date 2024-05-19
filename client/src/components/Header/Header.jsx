@@ -44,7 +44,7 @@ const Header = () => {
                 style={{ marginRight: "20px" }}
                 onClick={() => navigate("/")}
               >
-                Điều phối
+                Điều phối tuyến
               </Nav.Link>
               <NavDropdown
                 title="Khai báo"
@@ -90,7 +90,9 @@ const Header = () => {
                   Công nợ nhân viên
                 </NavDropdown.Item>
               </NavDropdown>
-              <Nav.Link onClick={() => navigate("/booking")}>Booking</Nav.Link>
+              <Nav.Link onClick={() => navigate("/booking")}>
+                Điều phối xe
+              </Nav.Link>
             </Nav>
             <div className="d-flex align-items-center">
               <img
