@@ -25,12 +25,6 @@ public class GanNguoi {
                 { 156, 195, 104 },
         };
 
-        int[][] product_price = {
-                { 1, 1, 1 },
-                { 1, 1, 1 },
-                { 1, 1, 1 },
-        };
-
         int[] skillRequire = { 1, 1, 1 };
         int[][] workerSkill = {
                 { 1, 2, 3 }, // worker 1
@@ -38,7 +32,7 @@ public class GanNguoi {
                 { 1, 2, 3 }, // worker 3
         };
 
-        int[] debt = { 1, 1, 3 };
+        int[] max_debt = { 1, 1, 3 };
 
         // int[] load = { 2, 0 };
 
@@ -110,9 +104,9 @@ public class GanNguoi {
         for (int worker : allWorkers) {
             LinearExprBuilder debt_lst = LinearExpr.newBuilder();
             for (int task : allTasks) {
-                debt_lst.addTerm(x[worker][task], product_price[worker][task]);
+                debt_lst.addTerm(x[worker][task], costs[worker][task]);
             }
-            model.addLessOrEqual(debt_lst, debt[worker]);
+            model.addLessOrEqual(debt_lst, max_debt[worker]);
         }
 
         // Skill constraint

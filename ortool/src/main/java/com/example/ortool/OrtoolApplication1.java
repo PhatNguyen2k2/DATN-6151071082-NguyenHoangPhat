@@ -23,10 +23,11 @@ public class OrtoolApplication1 {
                 { 35, 85, 55, 20 },
                 { 35, 85, 55, 20 },
         };
-        int[][] times = { { 0, 10 }, { 11, 20 }, { 19, 30 }, { 19, 30 } };
+        int[][] times = { { 0, 10 }, { 11, 20 }, { 19, 23 }, { 19, 23 } };
         int[][][] workerShift = {
-                { { 0, 4 } }, { { 20, 30 } }, { { 0, 10 }, { 11, 18 } }
+                { { 0, 4 } }, { { 20, 23 } }, { { 0, 10 }, { 11, 18 } }
         };
+        int[] totalSizeMax = { 1, 2, 1 };
         final int numWorkers = costs.length;
         final int numTasks = costs[0].length;
 
@@ -70,6 +71,17 @@ public class OrtoolApplication1 {
             }
             model.addNoOverlap(lst);
         }
+
+        for (int worker : allWorkers) {
+            List<Literal> workerTasks = new ArrayList<>();
+            for (int task : allTasks) {
+                workerTasks.add(x[worker][task]);
+            }
+            IntVar totalTasksForWorker = model.newIntVar(0, totalSizeMax[worker], "totalTasksForWorker_" + worker);
+            Literal[] assignedWorkersArray = workerTasks.toArray(new Literal[0]);
+            model.addEquality(LinearExpr.sum(assignedWorkersArray), totalTasksForWorker);
+        }
+
         // Each task is assigned to exactly one worker.
         for (int task : allTasks) {
             List<Literal> workers = new ArrayList<>();
