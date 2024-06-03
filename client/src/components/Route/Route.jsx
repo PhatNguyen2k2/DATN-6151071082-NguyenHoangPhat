@@ -146,7 +146,8 @@ const Route = (props) => {
                   {plan.employee ? (
                     <span className="value" style={{ color: "blueviolet" }}>
                       {plan?.employee?.employeeId} -{" "}
-                      {plan?.employee?.employeeName}
+                      {plan?.employee?.employeeName} (
+                      {plan?.employee?.phoneNumber})
                     </span>
                   ) : (
                     <span className="value" style={{ color: "indigo" }}>

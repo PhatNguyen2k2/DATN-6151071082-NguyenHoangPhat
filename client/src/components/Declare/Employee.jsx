@@ -68,6 +68,7 @@ const Employee = () => {
             <th>Kỹ năng</th>
             <th>Kho phục vụ</th>
             <th>Ca đăng kí</th>
+            <th>Số điện thoại</th>
           </tr>
         </thead>
         <tbody>
@@ -80,6 +81,7 @@ const Employee = () => {
                 <td>{currentSkill}</td>
                 <td>{e.employee.store.storeName}</td>
                 <td>{e.shift.shiftName}</td>
+                <td>{e.employee.phoneNumber}</td>
               </tr>
             ))}
         </tbody>
