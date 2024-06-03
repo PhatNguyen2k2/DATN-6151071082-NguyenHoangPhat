@@ -32,11 +32,11 @@ public class GanNguoi {
                 { 1, 2, 3 }, // worker 3
         };
 
-        int[] max_debt = { 1, 1, 3 };
+        int[] max_debt = { 300, 100, 500 };
 
         // int[] load = { 2, 0 };
 
-        int[][] times = { { 0, 10 }, { 11, 20 }, { 5, 25 } };
+        int[][] times = { { 0, 10 }, { 11, 20 }, { 5, 20 } };
         int[][][] workerShift = {
                 { { 0, 4 } },
                 { { 10, 11 } },
@@ -122,24 +122,24 @@ public class GanNguoi {
             }
         }
         // Each task is assigned to exactly one worker.
-        // for (int task : allTasks) {
-        // List<Literal> workers = new ArrayList<>();
-        // for (int worker : allWorkers) {
-        // workers.add(x[worker][task]);
-        // }
-        // model.addExactlyOne(workers);
-        // }
+        for (int task : allTasks) {
+            List<Literal> workers = new ArrayList<>();
+            for (int worker : allWorkers) {
+                workers.add(x[worker][task]);
+            }
+            model.addExactlyOne(workers);
+        }
 
         // Ensure the number of people doing each job
-        for (int task : allTasks) {
-            List<Literal> assignedWorkers = new ArrayList<>();
-            for (int worker : allWorkers) {
-                assignedWorkers.add(x[worker][task]);
-            }
-            Literal[] assignedWorkersArray = assignedWorkers.toArray(new Literal[0]);
-            LinearExpr sumExpr = LinearExpr.sum(assignedWorkersArray);
-            model.addGreaterOrEqual(sumExpr, numWorkersRequired[task]);
-        }
+        // for (int task : allTasks) {
+        // List<Literal> assignedWorkers = new ArrayList<>();
+        // for (int worker : allWorkers) {
+        // assignedWorkers.add(x[worker][task]);
+        // }
+        // Literal[] assignedWorkersArray = assignedWorkers.toArray(new Literal[0]);
+        // LinearExpr sumExpr = LinearExpr.sum(assignedWorkersArray);
+        // model.addGreaterOrEqual(sumExpr, numWorkersRequired[task]);
+        // }
         // Objective
         LinearExprBuilder obj = LinearExpr.newBuilder();
         for (int worker : allWorkers) {
@@ -161,8 +161,7 @@ public class GanNguoi {
                 for (int task : allTasks) {
                     if (solver.booleanValue(x[worker][task])) {
                         System.out.println("Worker " + worker + " assigned to task " + task
-                                + ".  Cost: " + costs[worker][task] + "; start: " + times[task][0] + "; end: "
-                                + times[task][1]);
+                                + ".  Cost: " + costs[worker][task]);
                     }
                 }
             }
