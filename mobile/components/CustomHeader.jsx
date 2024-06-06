@@ -7,19 +7,32 @@ import {
   StatusBar,
   TouchableOpacity,
 } from "react-native";
-import DropDownPicker from "react-native-dropdown-picker";
 import * as RootNavigation from "./RootNavigation";
 
-const CustomHeader = ({ title, logoSource }) => {
+const CustomHeader = ({ title }) => {
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="#f0f0f0" barStyle="dark-content" />
       <View style={styles.header}>
-        <Image source={{ uri: logoSource }} style={styles.logo} />
-        <TouchableOpacity onPress={() => RootNavigation.navigate("MainUser")}>
-          <Image source={{ uri: userInfo?.avatar }} style={styles.avatar} />
+        <Image
+          source={{
+            uri: "https://res.cloudinary.com/da5yv096f/image/upload/v1715395717/output-onlinepngtools_pbu5c2.png",
+          }}
+          style={styles.logo}
+        />
+        <TouchableOpacity
+          style={styles.info}
+          onPress={() => RootNavigation.navigate("MainUser")}
+        >
+          <Image
+            source={{
+              uri: "https://res.cloudinary.com/da5yv096f/image/upload/v1690723022/output-onlinegiftools_dsphas.gif",
+            }}
+            style={styles.avatar}
+          />
+          <Text>2618 - Đỗ Công Thương</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={handleLogout}>
+        <TouchableOpacity>
           <Text>Log Out</Text>
         </TouchableOpacity>
       </View>
@@ -32,6 +45,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#f0f0f0",
     zIndex: 1,
     height: 60,
+  },
+  info: {
+    flexDirection: "row",
+    alignItems: "center",
   },
   header: {
     flexDirection: "row",
@@ -49,6 +66,7 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     borderRadius: 15,
+    marginRight: 10,
   },
 });
 

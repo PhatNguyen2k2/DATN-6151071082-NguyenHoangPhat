@@ -4,10 +4,27 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { navigationRef } from "./components/RootNavigation";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Toast from "react-native-toast-message";
-
+import HomeScreen from "./screens/HomeScreen";
+import VehicleTypeScreen from "./screens/Vehicle/VehicleTypeScreen";
+import VehicleScreen from "./screens/Vehicle/VehicleScreen";
+import VehicleTypeSelectionScreen from "./screens/Vehicle/VehicleTypeSelectionScreen";
+global.ip = "192.168.1.141";
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
+function HomeStack() {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="HomeMain" component={HomeScreen} />
+      <Stack.Screen name="VehicleType" component={VehicleTypeScreen} />
+      <Stack.Screen
+        name="VehicleTypeSelection"
+        component={VehicleTypeSelectionScreen}
+      />
+      <Stack.Screen name="Vehicle" component={VehicleScreen} />
+    </Stack.Navigator>
+  );
+}
 export default function App() {
   return (
     <NavigationContainer ref={navigationRef}>
@@ -32,8 +49,8 @@ export default function App() {
         })}
       >
         <Tab.Screen name="Home" component={HomeStack} />
-        <Tab.Screen name="Drinks" component={DrinksStack} />
-        <Tab.Screen name="Pets" component={PetsStack} />
+        <Tab.Screen name="Booking" component={VehicleScreen} />
+        <Tab.Screen name="Setting" component={VehicleScreen} />
       </Tab.Navigator>
       <Toast />
     </NavigationContainer>
