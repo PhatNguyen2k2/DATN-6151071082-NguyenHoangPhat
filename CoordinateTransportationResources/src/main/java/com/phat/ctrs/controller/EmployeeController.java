@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.phat.ctrs.model.CurrentDebt;
+import com.phat.ctrs.model.Employee;
 import com.phat.ctrs.model.EmployeeShift;
 import com.phat.ctrs.model.EmployeeSkill;
 import com.phat.ctrs.model.LimitDebt;
@@ -61,5 +62,10 @@ public class EmployeeController {
     @GetMapping("/limitDebt")
     private ResponseEntity<List<LimitDebt>> getLimitDebt() {
         return new ResponseEntity<List<LimitDebt>>(employeeService.getAllLimitDebt(), HttpStatus.OK);
+    }
+
+    @GetMapping("/driver")
+    private ResponseEntity<List<Employee>> getDriverByPartner() {
+        return new ResponseEntity<List<Employee>>(employeeService.getDriverByPartner(), HttpStatus.OK);
     }
 }

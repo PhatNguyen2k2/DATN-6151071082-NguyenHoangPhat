@@ -20,4 +20,6 @@ public interface IEmployeeService {
     public void deleteEmployeeTransportService();
 
     public void insertEmployeeTransportService(BigDecimal routeId, BigDecimal employeeId);
+
+    public List<Employee> getDriverByPartner();
 }

@@ -56,4 +56,10 @@ public class EmployeeServiceImpl implements IEmployeeService {
     public List<EmployeeTransportService> getAllEmployeeTransportService() {
         return employeeTransportServiceRepository.findAll();
     }
+
+    @Override
+    public List<Employee> getDriverByPartner() {
+        BigDecimal partnerId = BigDecimal.valueOf(7);
+        return employeeRepository.getDriverByPartner(partnerId);
+    }
 }
