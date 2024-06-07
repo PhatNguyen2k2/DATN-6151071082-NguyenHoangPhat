@@ -11,7 +11,7 @@ import {
 import axios from "axios";
 import Icon from "react-native-vector-icons/FontAwesome";
 import CustomHeader from "../../components/CustomHeader";
-const apiUrl = `http://${global.ip}:8080/api/route/vehicle`;
+const apiUrl = `http://192.168.1.141:8080/api/route/vehicle`;
 const VehicleScreen = ({ route }) => {
   const { vehicleTypeId, vehicleGroup, weight } = route.params;
   const [vehicles, setVehicles] = useState([]);
@@ -80,14 +80,14 @@ const VehicleScreen = ({ route }) => {
       <CustomHeader title="Vehicle" />
       <View style={styles.container}>
         <Text style={styles.title}>
-          {vehicleGroup} {weight} kg
+          Loại {vehicleGroup} {weight} kg
         </Text>
         {!isFormVisible && (
           <TouchableOpacity
             style={styles.showFormButton}
             onPress={() => setIsFormVisible(true)}
           >
-            <Text style={styles.buttonText}>Add New Vehicle</Text>
+            <Text style={styles.buttonText}>Thêm xe mới</Text>
           </TouchableOpacity>
         )}
         {isFormVisible && (
@@ -140,8 +140,8 @@ const VehicleScreen = ({ route }) => {
                 placeholder="Tài xế"
                 value={
                   vehicle.employee !== undefined
-                    ? vehicle.employee.phoneNumber +
-                      "-" +
+                    ? vehicle.employee.employeeId +
+                      " - " +
                       vehicle.employee.employeeName
                     : ""
                 }
@@ -184,7 +184,7 @@ const VehicleScreen = ({ route }) => {
                 </Text>
                 <Text style={styles.itemText}>
                   <Text style={styles.itemLabel}>Tài xế:</Text>{" "}
-                  {item.employee.phoneNumber}-{item.employee.employeeName}
+                  {item.employee.employeeId} - {item.employee.employeeName}
                 </Text>
               </View>
               <View style={styles.iconContainer}>

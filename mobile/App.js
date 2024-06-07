@@ -8,6 +8,7 @@ import HomeScreen from "./screens/HomeScreen";
 import VehicleTypeScreen from "./screens/Vehicle/VehicleTypeScreen";
 import VehicleScreen from "./screens/Vehicle/VehicleScreen";
 import VehicleTypeSelectionScreen from "./screens/Vehicle/VehicleTypeSelectionScreen";
+import DriverScreen from "./screens/Vehicle/DriverScreen";
 global.ip = "192.168.1.141";
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -22,6 +23,7 @@ function HomeStack() {
         component={VehicleTypeSelectionScreen}
       />
       <Stack.Screen name="Vehicle" component={VehicleScreen} />
+      <Stack.Screen name="Driver" component={DriverScreen} />
     </Stack.Navigator>
   );
 }

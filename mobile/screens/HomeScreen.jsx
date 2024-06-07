@@ -1,28 +1,73 @@
-import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import React, { useRef } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Animated,
+} from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import * as RootNavigation from "../components/RootNavigation";
 
 const HomeScreen = () => {
+  const scaleAnim = useRef(new Animated.Value(1)).current;
+
+  const startAnimation = () => {
+    Animated.sequence([
+      Animated.timing(scaleAnim, {
+        toValue: 1.2,
+        duration: 200,
+        useNativeDriver: true,
+      }),
+      Animated.timing(scaleAnim, {
+        toValue: 1,
+        duration: 200,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  };
+
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Home</Text>
+      <Text style={styles.header}>Chọn trang quản lý</Text>
       <View style={styles.iconContainer}>
         <TouchableOpacity
           style={styles.iconButton}
-          onPress={() => RootNavigation.navigate("VehicleType")}
+          onPress={() => {
+            startAnimation();
+            RootNavigation.navigate("VehicleType");
+          }}
         >
-          <Icon name="car" size={50} color="#007BFF" />
-          <Text style={styles.iconText}>Vehicle Types</Text>
+          <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
+            <Icon name="car" size={60} color="#007BFF" />
+          </Animated.View>
+          <Text style={styles.iconText}>Khai báo loại xe</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.iconButton}
-          onPress={() => RootNavigation.navigate("VehicleTypeSelection")}
+          onPress={() => {
+            startAnimation();
+            RootNavigation.navigate("VehicleTypeSelection");
+          }}
         >
-          <Icon name="truck" size={50} color="#007BFF" />
-          <Text style={styles.iconText}>Vehicles</Text>
+          <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
+            <Icon name="truck" size={60} color="#007BFF" />
+          </Animated.View>
+          <Text style={styles.iconText}>Khai báo xe</Text>
         </TouchableOpacity>
       </View>
+      <TouchableOpacity
+        style={styles.driverButton}
+        onPress={() => {
+          startAnimation();
+          RootNavigation.navigate("Driver");
+        }}
+      >
+        <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
+          <Icon name="user" size={60} color="#007BFF" />
+        </Animated.View>
+        <Text style={styles.iconText}>Khai báo tài xế</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -43,11 +88,15 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     width: "100%",
+    marginBottom: 20,
   },
   iconButton: {
     justifyContent: "center",
     alignItems: "center",
-    marginHorizontal: 20,
+  },
+  driverButton: {
+    justifyContent: "center",
+    alignItems: "center",
   },
   iconText: {
     marginTop: 10,

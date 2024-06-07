@@ -12,7 +12,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import axios from "axios";
 import CustomHeader from "../../components/CustomHeader";
 
-const apiUrl = `http://${global.ip}:8080/api/route/vehicleType`;
+const apiUrl = `http://192.168.1.141:8080/api/route/vehicleType`;
 
 const VehicleTypeScreen = () => {
   const [vehicleTypes, setVehicleTypes] = useState([]);

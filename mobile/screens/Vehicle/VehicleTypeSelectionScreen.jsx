@@ -9,14 +9,13 @@ import {
 import axios from "axios";
 import * as RootNavigation from "../../components/RootNavigation";
 import CustomHeader from "../../components/CustomHeader";
-const apiUrl = `http://${global.ip}:8080/api/route/vehicleType`;
+const apiUrl = `http://192.168.1.141:8080/api/route/vehicleType`;
 const VehicleTypeSelectionScreen = () => {
   const [vehicleTypes, setVehicleTypes] = useState([]);
 
   useEffect(() => {
     fetchVehicleTypes();
   }, []);
-
   const fetchVehicleTypes = async () => {
     try {
       const response = await axios.get(apiUrl);
