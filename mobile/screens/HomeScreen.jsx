@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import * as RootNavigation from "../components/RootNavigation";
+import CustomHeader from "../components/CustomHeader";
 
 const HomeScreen = () => {
   const scaleAnim = useRef(new Animated.Value(1)).current;
@@ -28,47 +29,50 @@ const HomeScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Chọn trang quản lý</Text>
-      <View style={styles.iconContainer}>
+    <>
+      <CustomHeader title="Home" />
+      <View style={styles.container}>
+        <Text style={styles.header}>Chọn trang quản lý</Text>
+        <View style={styles.iconContainer}>
+          <TouchableOpacity
+            style={styles.iconButton}
+            onPress={() => {
+              startAnimation();
+              RootNavigation.navigate("VehicleType");
+            }}
+          >
+            <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
+              <Icon name="car" size={60} color="#007BFF" />
+            </Animated.View>
+            <Text style={styles.iconText}>Khai báo loại xe</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.iconButton}
+            onPress={() => {
+              startAnimation();
+              RootNavigation.navigate("VehicleTypeSelection");
+            }}
+          >
+            <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
+              <Icon name="truck" size={60} color="#007BFF" />
+            </Animated.View>
+            <Text style={styles.iconText}>Khai báo xe</Text>
+          </TouchableOpacity>
+        </View>
         <TouchableOpacity
-          style={styles.iconButton}
+          style={styles.driverButton}
           onPress={() => {
             startAnimation();
-            RootNavigation.navigate("VehicleType");
+            RootNavigation.navigate("Driver");
           }}
         >
           <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
-            <Icon name="car" size={60} color="#007BFF" />
+            <Icon name="user" size={60} color="#007BFF" />
           </Animated.View>
-          <Text style={styles.iconText}>Khai báo loại xe</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.iconButton}
-          onPress={() => {
-            startAnimation();
-            RootNavigation.navigate("VehicleTypeSelection");
-          }}
-        >
-          <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
-            <Icon name="truck" size={60} color="#007BFF" />
-          </Animated.View>
-          <Text style={styles.iconText}>Khai báo xe</Text>
+          <Text style={styles.iconText}>Khai báo tài xế</Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity
-        style={styles.driverButton}
-        onPress={() => {
-          startAnimation();
-          RootNavigation.navigate("Driver");
-        }}
-      >
-        <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
-          <Icon name="user" size={60} color="#007BFF" />
-        </Animated.View>
-        <Text style={styles.iconText}>Khai báo tài xế</Text>
-      </TouchableOpacity>
-    </View>
+    </>
   );
 };
 

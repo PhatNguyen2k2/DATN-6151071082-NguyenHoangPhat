@@ -9,6 +9,8 @@ import VehicleTypeScreen from "./screens/Vehicle/VehicleTypeScreen";
 import VehicleScreen from "./screens/Vehicle/VehicleScreen";
 import VehicleTypeSelectionScreen from "./screens/Vehicle/VehicleTypeSelectionScreen";
 import DriverScreen from "./screens/Vehicle/DriverScreen";
+import BookingScreen from "./screens/Booking/BookingScreen";
+import SettingScreen from "./screens/Setting/SettingScreen";
 global.ip = "192.168.1.141";
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -51,8 +53,8 @@ export default function App() {
         })}
       >
         <Tab.Screen name="Home" component={HomeStack} />
-        <Tab.Screen name="Booking" component={VehicleScreen} />
-        <Tab.Screen name="Setting" component={VehicleScreen} />
+        <Tab.Screen name="Booking" component={BookingScreen} />
+        <Tab.Screen name="Setting" component={SettingScreen} />
       </Tab.Navigator>
       <Toast />
     </NavigationContainer>
