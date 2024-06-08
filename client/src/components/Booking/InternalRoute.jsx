@@ -22,9 +22,9 @@ const InternalRoute = (props) => {
         " - " +
         v.licensePlates +
         " (" +
-        v.employee.employeeId +
-        " - " +
         v.employee.employeeName +
+        " - " +
+        v.employee.phoneNumber +
         ")"
     );
     window.location.reload();
@@ -106,9 +106,9 @@ const InternalRoute = (props) => {
                             " - " +
                             v.licensePlates +
                             " (" +
-                            v.employee.employeeId +
-                            " - " +
                             v.employee.employeeName +
+                            " - " +
+                            v.employee.phoneNumber +
                             ")"}
                         </option>
                       ))}
