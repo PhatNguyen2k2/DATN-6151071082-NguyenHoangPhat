@@ -1,3 +1,3 @@
 # DATN-6151071082-NguyenHoangPhat
 
-## Đề tài: Tìm hiểu về Bài toán Assignment problem và ứng dụng vào xây dựng website tối ưu hóa quy trình gán xe vào tuyến
+## Đề tài: Nghiên cứu và Ứng dụng công cụ OR-Tools vào xây dựng hệ thống điều phối nguồn lực (nhà cung cấp & nhân viên) tự động
