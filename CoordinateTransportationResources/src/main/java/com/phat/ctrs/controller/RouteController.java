@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -94,18 +95,19 @@ public class RouteController {
 				HttpStatus.OK);
 	}
 
-	@GetMapping("/internalServicePlan")
-	private ResponseEntity<List<TransportServicePlan>> getInternalServicePlan() {
-		return new ResponseEntity<List<TransportServicePlan>>(planService.getInternalServicePlan(),
+	@GetMapping("/internalServicePlan/{id}")
+	private ResponseEntity<List<TransportServicePlan>> getInternalServicePlan(@PathVariable BigDecimal id) {
+		return new ResponseEntity<List<TransportServicePlan>>(planService.getInternalServicePlan(id),
 				HttpStatus.OK);
 	}
 
-	@PostMapping("/updateVehicle")
+	@PostMapping("/updateVehicle/{id}")
 	@ResponseBody
-	private ResponseEntity<List<TransportServicePlan>> updateVehicleOfRoute(@RequestBody ObjectNode json) {
+	private ResponseEntity<List<TransportServicePlan>> updateVehicleOfRoute(@RequestBody ObjectNode json,
+			@PathVariable BigDecimal id) {
 		planService.updateVehicleForRoute(json.get("vehicleInfo").asText(),
 				BigDecimal.valueOf(Integer.parseInt(json.get("planId").asText())));
-		return new ResponseEntity<List<TransportServicePlan>>(planService.getInternalServicePlan(),
+		return new ResponseEntity<List<TransportServicePlan>>(planService.getInternalServicePlan(id),
 				HttpStatus.OK);
 	}
 }

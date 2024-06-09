@@ -23,7 +23,7 @@ const BookingScreen = () => {
 
   const getPlan = async () => {
     try {
-      const plan = await axios.get(`${apiUrl}/internalServicePlan`);
+      const plan = await axios.get(`${apiUrl}/internalServicePlan/7`);
       plan.data = plan.data.sort((a, b) => a.route.routeId - b.route.routeId);
       setPlans(plan.data);
     } catch (error) {
@@ -67,7 +67,7 @@ const BookingScreen = () => {
   const updateTransportServicePlan = async () => {
     if (vehicleInfo && selectedPlanId) {
       try {
-        const response = await axios.post(`${apiUrl}/updateVehicle`, {
+        const response = await axios.post(`${apiUrl}/updateVehicle/7`, {
           vehicleInfo: vehicleInfo,
           planId: selectedPlanId,
         });

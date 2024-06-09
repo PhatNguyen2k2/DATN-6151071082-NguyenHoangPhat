@@ -22,7 +22,7 @@ const CustomHeader = ({ title }) => {
         />
         <TouchableOpacity
           style={styles.info}
-          onPress={() => RootNavigation.navigate("MainUser")}
+          onPress={() => RootNavigation.navigate("Setting")}
         >
           <Image
             source={{

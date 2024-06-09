@@ -18,7 +18,7 @@ public interface ITransportServicePlanService {
 
 	public void updateCost();
 
-	public List<TransportServicePlan> getInternalServicePlan();
+	public List<TransportServicePlan> getInternalServicePlan(BigDecimal plan_id);
 
 	public void resetPlan();
 }

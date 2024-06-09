@@ -9,7 +9,7 @@ const ListInternalRoute = () => {
   const [tranportServicePlanId, setTranportServicePlanId] = useState("");
   const getPlan = async () => {
     const plan = await axios.get(
-      "http://localhost:8080/api/route/internalServicePlan"
+      "http://localhost:8080/api/route/internalServicePlan/1"
     );
     plan.data = plan.data.sort(function (a, b) {
       return a.route.routeId - b.route.routeId;
@@ -25,7 +25,7 @@ const ListInternalRoute = () => {
   const updateTransportServicePlan = async () => {
     if (vehicleInfo !== "" && tranportServicePlanId !== "") {
       const plan = await axios.post(
-        "http://localhost:8080/api/route/updateVehicle",
+        "http://localhost:8080/api/route/updateVehicle/1",
         { vehicleInfo: vehicleInfo, planId: tranportServicePlanId }
       );
       plan.data = plan.data.sort(function (a, b) {

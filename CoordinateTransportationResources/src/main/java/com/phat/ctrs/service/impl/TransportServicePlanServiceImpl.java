@@ -51,8 +51,8 @@ public class TransportServicePlanServiceImpl implements ITransportServicePlanSer
     }
 
     @Override
-    public List<TransportServicePlan> getInternalServicePlan() {
-        return planRepository.getInternalServicePlan();
+    public List<TransportServicePlan> getInternalServicePlan(BigDecimal plan_id) {
+        return planRepository.getInternalServicePlan(plan_id);
     }
 
     @Override

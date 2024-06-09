@@ -27,8 +27,8 @@ public interface ITransportServicePlanRepository extends JpaRepository<Transport
     @Query(value = "update transport_service_plan set employee_id = ?1 where route_id = ?2", nativeQuery = true)
     public int updateEmployeeForRoute(BigDecimal employeeId, BigDecimal routeId);
 
-    @Query(value = "select * from transport_service_plan where partner_id = 1", nativeQuery = true)
-    public List<TransportServicePlan> getInternalServicePlan();
+    @Query(value = "select * from transport_service_plan where partner_id = ?1", nativeQuery = true)
+    public List<TransportServicePlan> getInternalServicePlan(BigDecimal partner_id);
 
     @Modifying
     @Query(value = "update transport_service_plan set vehicle_info = ?1 where transport_service_plan_id = ?2", nativeQuery = true)
