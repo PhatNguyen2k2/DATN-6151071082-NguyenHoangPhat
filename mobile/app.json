@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "mobile",
-    "slug": "mobile",
+    "slug": "logistic-management",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/logisticLogo.png",
@@ -18,10 +18,17 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/logisticLogo.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.fatbe.logisticmanagement"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "a3da49e6-dd93-45d9-89be-b18f2ca093cb"
+      }
+    },
+    "owner": "fatbe"
   }
 }
