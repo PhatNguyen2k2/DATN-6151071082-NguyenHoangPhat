@@ -11,7 +11,8 @@ import axios from "axios";
 import { Picker } from "@react-native-picker/picker";
 import CustomHeader from "../../components/CustomHeader";
 
-const apiUrl = `http://192.168.1.141:8080/api/route`;
+// const apiUrl = `http://192.168.1.141:8080/api/route`;
+const apiUrl = `http://172.16.103.244:8080/api/route`;
 
 const BookingScreen = () => {
   const [plans, setPlans] = useState([]);

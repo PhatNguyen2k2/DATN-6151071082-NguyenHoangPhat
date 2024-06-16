@@ -9,7 +9,8 @@ import {
 import axios from "axios";
 import * as RootNavigation from "../../components/RootNavigation";
 import CustomHeader from "../../components/CustomHeader";
-const apiUrl = `http://192.168.1.141:8080/api/route/vehicleType`;
+// const apiUrl = `http://192.168.1.141:8080/api/route/vehicleType`;
+const apiUrl = `http://172.16.103.244:8080/api/route/vehicleType`;
 const VehicleTypeSelectionScreen = () => {
   const [vehicleTypes, setVehicleTypes] = useState([]);
 

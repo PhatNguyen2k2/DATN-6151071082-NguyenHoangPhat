@@ -10,7 +10,8 @@ import {
 } from "react-native";
 import axios from "axios";
 import Icon from "react-native-vector-icons/FontAwesome";
-const apiUrl = `http://192.168.1.141:8080/api/employee`;
+// const apiUrl = `http://192.168.1.141:8080/api/employee`;
+const apiUrl = `http://172.16.103.244:8080/api/employee`;
 const DriverScreen = () => {
   const [drivers, setDrivers] = useState([]);
   const [driver, setDriver] = useState({});
